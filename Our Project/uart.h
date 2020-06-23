@@ -2,9 +2,10 @@
 #define _UART_H
 
 #include <stdint.h>
-#include "gpio.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "gpio.h"
 
 #define UART_BUFFER_SIZE 	64
 #define Memory(X,Y)			 	(*((volatile uint32_t*)(((uint32_t)X)+((uint32_t)Y))))
@@ -59,6 +60,7 @@ typedef enum UART_BAUDRATE{
 void UART_init(Uart uart, UART_BAUDRATE baudrate);
 uint8_t UART_readChar(Uart uart);
 void UART_sendChar(Uart uart, const char data);
+void UART_sendInt(Uart uart, int num);
 void UART_sendString(Uart uart, const char *data);
 void UART_sendByteStream(Uart uart, const uint8_t *data, const uint8_t size);
 void UART_attachBuffer(Uart uart);

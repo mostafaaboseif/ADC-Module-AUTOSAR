@@ -57,7 +57,8 @@ typedef enum GPIORegistersOffset{
 	GPIO_LCK			= 0x520,
 	GPIO_CR				= 0x524,
 	GPIO_AMSEL			= 0x528,
-	GPIO_PCTL			= 0x52C
+	GPIO_PCTL			= 0x52C,
+	GPIO_ADCCTL   = 0x530
 } GPIORegistersOffset;
 
 typedef enum Pin{
@@ -101,6 +102,7 @@ uint8_t GPIO_readPort(volatile uint32_t portAddress);
 void    GPIO_writePort(volatile uint32_t portAddress, uint8_t value);
 
 void 	GPIO_initInterrupt(volatile uint32_t portAddress, Pin pin, InterruptEvent ev, void (*callback)());
+void GPIO_initInterruptAdc(volatile uint32_t portAddress, Pin pin, InterruptEvent ev);
 void  GPIO_interruptHandler(volatile uint32_t portAddress);
 
 void 	GPIO_setPullup(volatile uint32_t portAddress, Pin pin);

@@ -131,6 +131,23 @@ void GPIO_initInterrupt(volatile uint32_t portAddress, Pin pin, InterruptEvent e
 	}
 }
 
+void GPIO_initInterruptAdc(volatile uint32_t portAddress, Pin pin, InterruptEvent ev){
+	GPIO_setClkSource(portAddress);
+	Memory(portAddress, GPIO_IS) &= ~(pin);
+	if(ev == BOTH){
+		Memory(portAddress, GPIO_IBE) |= (pin);
+	}else if(ev == FALLING){
+		Memory(portAddress, GPIO_IBE) &= ~(pin);
+		Memory(portAddress, GPIO_IEV) &= ~(pin);
+	}else if(ev == RISING){
+		Memory(portAddress, GPIO_IBE) &= ~(pin);
+		Memory(portAddress, GPIO_IEV) |= (pin);
+	}
+	Memory(portAddress, GPIO_ICR) |= (pin);
+	Memory(portAddress, GPIO_IM)  |= (pin);
+	Memory(portAddress, GPIO_ADCCTL)  |= (pin);
+}
+
 void GPIO_interruptHandler(volatile uint32_t portAddress){
 	uint8_t portNumber;
 	switch(portAddress){

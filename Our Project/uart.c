@@ -41,6 +41,14 @@ void UART_sendString(Uart uart, const char *data){
 	UART_sendChar(uart,'\0');
 }
 
+void UART_sendInt(Uart uart, int num)
+{
+	char buffer[15]; 
+  sprintf(buffer, "%d", num);    
+	UART_sendString(UART1,buffer);
+	UART_sendChar(UART1,'\n');
+}
+
 void UART_sendByteStream(Uart uart, const uint8_t *data, const uint8_t size){
 	for(int i = 0; i < size; i++) UART_sendChar(uart,data[i]);
 }

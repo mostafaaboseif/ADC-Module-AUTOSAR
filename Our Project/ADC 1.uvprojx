@@ -403,9 +403,9 @@
               <FilePath>.\timer.c</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\timer.h</FilePath>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\adc.c</FilePath>
             </File>
           </Files>
         </Group>
