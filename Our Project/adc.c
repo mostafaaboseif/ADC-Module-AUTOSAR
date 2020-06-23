@@ -1,4 +1,6 @@
 #include "adc.h"
+//#include "AUTOSAR_ADC_Types.h"
+
 
 
 void Adc_init(AdcChannel AdcChannel, HwTrigger HwTrigger)
@@ -39,3 +41,16 @@ void ADC0SS3_Handler()
 		ADC0_ISC_R = (1<<3);
 }
 
+void Adc_StartGroupConversion ( Adc_GroupType Group ){
+	
+	//to get the sequencer of the given group ID
+	Sequencer Current_Sequencer;
+	for( int i=0 ;i <= 8; i++){
+		if ( AdcChannelGroups[i].ID == Group){
+			Current_Sequencer= AdcChannelGroups[i].Sequencer;
+			break;
+		}
+	}
+	
+	ADC0_PSSI_R = (1<< Current_Sequencer);
+}

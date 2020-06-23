@@ -3,6 +3,8 @@
 #define MAX_NB_CHANNELS 8
 #define MAX_NB_GROUPS 8
 
+typedef uint8_t Adc_GroupType;
+
 typedef enum AdcInputPin{
 PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5 
 }AdcInputPin;
@@ -87,7 +89,7 @@ ADC_TRIGGER_ALWAYS     =0x0F,
 
 typedef struct AdcChannel{
 AdcModule AdcModule;
-Sequencer Sequencer;
+Sequencer Sequencer; 
 AdcInputPin AdcInputPin;
 uint8_t ChannelPriority;
 }AdcChannel;
@@ -95,11 +97,18 @@ uint8_t ChannelPriority;
 
 typedef struct AdcChannelGroup{
 AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
+Adc_GroupType ID;
+Sequencer Sequencer;
 HwTrigger HwTrigger;
 uint8_t GroupPriority;
 }AdcChannelGroup;
 
 
+//array to be intialized in the ADC_init function with the groups
+static AdcChannelGroup AdcChannelGroups[8];
+
 void Adc_init(AdcChannel, HwTrigger);
 
 void Adc_SetupResultBuffer (AdcModule,volatile uint32_t *buffer_ptr);
+
+void Adc_StartGroupConversion ( Adc_GroupType Group );
