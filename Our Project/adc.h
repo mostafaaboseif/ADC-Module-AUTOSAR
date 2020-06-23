@@ -105,7 +105,7 @@ uint8_t GroupPriority;
 
 
 //array to be intialized in the ADC_init function with the groups
-static AdcChannelGroup AdcChannelGroups[8];
+static AdcChannelGroup AdcChannelGroups[MAX_NB_GROUPS];
 
 void Adc_init(AdcChannel, HwTrigger);
 

@@ -45,12 +45,25 @@ void Adc_StartGroupConversion ( Adc_GroupType Group ){
 	
 	//to get the sequencer of the given group ID
 	Sequencer Current_Sequencer;
-	for( int i=0 ;i <= 8; i++){
+	_Bool ValidGroup = 0;
+	AdcChannelGroup* ChannelGroup;
+	for( uint32_t i=0 ;i <= MAX_NB_GROUPS; i++){
 		if ( AdcChannelGroups[i].ID == Group){
-			Current_Sequencer= AdcChannelGroups[i].Sequencer;
+			ChannelGroup = &AdcChannelGroups[i];
+			ValidGroup = 1;
 			break;
 		}
 	}
-	
-	ADC0_PSSI_R = (1<< Current_Sequencer);
+	if (ValidGroup)
+	{		if((ChannelGroup->HwTrigger)!= ADC_TRIGGER_PROCESSOR)
+			{
+				/*handle trigger is not SW error*/
+			}
+			Current_Sequencer= ChannelGroup->Sequencer;
+			ADC0_PSSI_R = (1<< Current_Sequencer);
+	}
+	else
+	{
+		/* handle invalid  error*/
+	}
 }
