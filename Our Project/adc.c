@@ -2,7 +2,7 @@
 /* ---------------------------------- INCLUDES ---------------------------------- */
 
 #include "adc.h"
-
+#include "uart.h"
 /* --------------------------- GLOBAL EXTERN VARIABLES --------------------------- */
 
 extern AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
@@ -53,13 +53,46 @@ void Adc_init(AdcChannelGroup AdcChannelGroup)
 
 }
 
-//volatile uint32_t adcResult;
 
-//void Adc_SetupResultBuffer ( AdcModule AdcModule, volatile uint32_t *buffer_ptr )
-//{
-//	volatile aa =adcResult;
-//	*buffer_ptr = aa;
-//}
+extern volatile uint32_t adcResult[2][4];   // result [adc_number] [sequencer_number]
+volatile uint32_t adcResult[2][4];
+
+void ADC0SS0_Handler()
+{
+		adcResult[0][0] = ADC0_SSFIFO0_R; //change [] [] according to adc ,seq number 
+		ADC0_ISC_R = (1<<0);   //clear interrupt pin by setting it 
+}
+
+
+
+void Adc_SetupResultBuffer ( AdcModule mod ,Sequencer s ,volatile uint32_t * buffer_ptr )
+{
+	if (mod==ADC0) 
+ {  
+		switch ((int)s)
+		{
+			case SS0 : (*buffer_ptr) = adcResult[0][0]; break;  
+			case SS1 : (*buffer_ptr) ; break;
+			case SS2 : (*buffer_ptr); break;
+			case SS3 : (*buffer_ptr); break;
+
+		}
+		} 
+ else if (mod==ADC1)
+ {
+	switch ((int)s)
+		{
+			case SS0 : (*buffer_ptr) ; break;
+			case SS1 : (*buffer_ptr) ; break;
+			case SS2 : (*buffer_ptr); break;
+			case SS3 : (*buffer_ptr); break;
+
+		}
+ 
+ 
+ }
+else;
+}
 
 //void ADC0SS3_Handler()
 //{

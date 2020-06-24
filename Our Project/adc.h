@@ -189,7 +189,7 @@ void Adc_init(AdcChannelGroup);
 void Adc_DeInit (void);
 #endif
 
-void Adc_SetupResultBuffer (AdcModule , volatile uint32_t *buffer_ptr);
+void Adc_SetupResultBuffer (AdcModule ,Sequencer ,volatile uint32_t *buffer_ptr);
 
 #if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
 void Adc_StartGroupConversion ( Adc_GroupType Group );
