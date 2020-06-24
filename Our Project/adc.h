@@ -3,21 +3,6 @@
 #define MAX_NB_CHANNELS 8
 #define MAX_NB_GROUPS 8
 
-typedef uint8_t Adc_GroupType;
-
-typedef enum AdcInputPin{
-PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5 
-}AdcInputPin;
-
-typedef enum Sequencer{
-	SS0,SS1,SS2,SS3
-}Sequencer;
-
-typedef enum AdcModule{
-	ADC0			= 0x40038000,
-	ADC1	 		= 0x40039000
-} AdcModule;
-
 typedef enum ADCRegOffset{
 ADC_ACTSS       =   0x000,  
 ADC_RIS         =   0x004, 
@@ -32,15 +17,15 @@ ADC_SPC         =   0x024,
 ADC_PSSI        =   0x028,
 ADC_SAC         =   0x030,
 ADC_CTL         =   0x038,
-ADC_SSMUX0      =   0x040,
+ADC_SSMUX0      =   0x040,//base
 ADC_SSCTL0      =   0x044,
-ADC_SSFIFO0     =   0x048, 
+ADC_SSFIFO0     =   0x048,//offset
 ADC_SSFSTAT0    =   0x04C, 
 ADC_SSOP0       =   0x050, 
 ADC_SSDC0       =   0x054, 
 ADC_SSEMUX0     =   0x058, 
 ADC_SSTSH0      =   0x05C, 
-ADC_SSMUX1      =   0x060, 
+ADC_SSMUX1      =   0x060,//step
 ADC_SSCTL1      =   0x064,
 ADC_SSFIFO1     =   0x068,
 ADC_SSFSTAT1    =   0x06C, 
@@ -71,43 +56,59 @@ ADC_CC          =   0xFC8
 
 
 
+typedef uint8_t Adc_GroupType;
 
-typedef enum HwTrigger{
-ADC_TRIGGER_PROCESSOR  =0x00,
-ADC_TRIGGER_COMP0      =0x01,
-ADC_TRIGGER_COMP1      =0x02,
-ADC_TRIGGER_COMP2      =0x03,
-ADC_TRIGGER_EXTERNAL   =0x04,
-ADC_TRIGGER_TIMER      =0x05,
-ADC_TRIGGER_PWM0       =0x06,
-ADC_TRIGGER_PWM1       =0x07,
-ADC_TRIGGER_PWM2       =0x08,
-ADC_TRIGGER_PWM3       =0x09,
-ADC_TRIGGER_ALWAYS     =0x0F,
-} HwTrigger;
-
-
-typedef struct AdcChannel{
-AdcModule AdcModule;
-Sequencer Sequencer; 
-AdcInputPin AdcInputPin;
-uint8_t ChannelPriority;
+typedef enum AdcChannel{
+PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5 
 }AdcChannel;
 
+typedef enum Sequencer{
+	SS0,SS1,SS2,SS3
+}Sequencer;
+
+typedef enum AdcModule{
+	ADC0			= 0x40038000,
+	ADC1	 		= 0x40039000
+} AdcModule;
+
+typedef enum HwTrigger{
+ADC_TRIGGER_PROCESSOR,
+ADC_TRIGGER_COMP0,
+ADC_TRIGGER_COMP1,
+ADC_TRIGGER_COMP2,
+ADC_TRIGGER_EXTERNAL,
+ADC_TRIGGER_TIMER,
+ADC_TRIGGER_PWM0,
+ADC_TRIGGER_PWM1,
+ADC_TRIGGER_PWM2,
+ADC_TRIGGER_PWM3,
+ADC_TRIGGER_ALWAYS =0x0F
+}HwTrigger;
+
+typedef enum SeqOffset{
+ADC_SS_BASE   = ADC_SSMUX0,
+ADC_SS_STEP   = ADC_SSMUX1 - ADC_SSMUX0,
+ADC_SSMUX     = ADC_SSMUX0 - ADC_SSMUX0,
+ADC_SSCTL     = ADC_SSCTL0 - ADC_SSMUX0,
+ADC_SSFIFO    = ADC_SSFIFO0 - ADC_SSMUX0,
+ADC_SSFSTAT  	= ADC_SSFSTAT0 - ADC_SSMUX0
+}SeqOffset;
 
 typedef struct AdcChannelGroup{
-AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
-Adc_GroupType ID;
+//uint8_t GroupId;
+AdcModule AdcModule;
 Sequencer Sequencer;
 HwTrigger HwTrigger;
-uint8_t GroupPriority;
+//uint8_t GroupPriority;
+uint8_t NbChannels;
+AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 }AdcChannelGroup;
 
 
 //array to be intialized in the ADC_init function with the groups
-static AdcChannelGroup AdcChannelGroups[8];
+static AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
 
-void Adc_init(AdcChannel, HwTrigger);
+void Adc_init(AdcChannelGroup);
 
 void Adc_SetupResultBuffer (AdcModule,volatile uint32_t *buffer_ptr);
 

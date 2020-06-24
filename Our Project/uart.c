@@ -75,6 +75,6 @@ void UART_readString(char *dest){
 	buffer_index = 0;
 }
 
-uint8_t UART_bufferAvailable(){
-	return buffer_index;
-}
+//uint8_t UART_bufferAvailable(){
+//	return buffer_index;
+//}

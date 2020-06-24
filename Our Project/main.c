@@ -8,39 +8,44 @@
 #include <stdlib.h>
 #include <string.h>
 
-void test()
+volatile uint32_t adcResult1=0,adcResult2=0;
+
+void ADC0SS0_Handler()
 {
-	GPIO_writePin(PORTF,PIN1,HIGH);
+		adcResult1 = ADC0_SSFIFO0_R;
+		ADC0_ISC_R = (1<<0);
+}
+
+void ADC1SS0_Handler()
+{
+		adcResult2 = ADC1_SSFIFO0_R;
+		ADC1_ISC_R = (1<<0);
 }
 
 int main()
 {
 	TIMER_initAdc(100);
-	//TIMER_initInterrupt(5,test);
-
+	
 	GPIO_initPin(PORTE,PIN3,ANALOG,PERIPHERAL);
+	GPIO_initPin(PORTD,PIN2,ANALOG,PERIPHERAL);
 	
-	AdcChannel AdcChannel = {ADC0,SS3,PE3};
+	AdcChannelGroup AdcChannelGroup1 = {ADC0, SS0, ADC_TRIGGER_PROCESSOR, 1, {PE3} };
+	AdcChannelGroup AdcChannelGroup2 = {ADC1, SS0, ADC_TRIGGER_TIMER, 1, {PD2} };	
+
+	Adc_init(AdcChannelGroup1);
+	Adc_init(AdcChannelGroup2);
 	
-	Adc_init(AdcChannel ,ADC_TRIGGER_TIMER);
+	UART_init(UART1,UART_BAUD_9600);
 	
-	GPIO_initPin(PORTF,PIN1,DIGITAL,OUTPUT);
-	GPIO_initPin(PORTF,PIN2,DIGITAL,OUTPUT);
-	GPIO_initPin(PORTF,PIN0,DIGITAL,INPUT);
-	//GPIO_initInterruptAdc(PORTF,PIN0,FALLING);
-	
-	//UART_init(UART1,9600);
-	
-	volatile uint32_t x;
-	Adc_SetupResultBuffer(ADC0,&x);
-	
-	volatile int y ;
 	while(1)
 	{
-		y =x ;
-		//ADC0_PSSI_R = 0x08;
-	//	UART_sendInt(UART1,12);		
-	//UART_sendString(UART1,"yaraab\n");
+		ADC0_PSSI_R = (1<<0);
+		
+		UART_sendString(UART1,"1st Result: ");
+		UART_sendInt(UART1,adcResult1);		
+		UART_sendString(UART1,"2nd Result: ");
+		UART_sendInt(UART1,adcResult2);		
+		
 	}
 }
 
