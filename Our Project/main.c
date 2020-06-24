@@ -12,14 +12,25 @@ volatile uint32_t adcResult1=0,adcResult2=0;
 
 
 AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS] = {
-{ADC0, SS0, ADC_TRIGGER_PROCESSOR, 1, {PE3} },
-{ADC0, SS1, ADC_TRIGGER_TIMER, 1, {PD2} }
+{
+0,    //ID
+ADC0,
+SS0, 
+ADC_TRIG_SRC_SW, 
+NO_HW_TRIG,
+ADC_HW_TRIG_RISING_EDGE, 
+ADC_STREAM_BUFFER_LINEAR,
+0,   //Priority
+2,   //Nb of channels
+{PE3,PD2} 
+}
+//{ADC0, SS1, ADC_TRIGGER_TIMER, 1, {PD2} }
 };
-
 
 void ADC0SS0_Handler()
 {
 		adcResult1 = ADC0_SSFIFO0_R;
+		adcResult2 = ADC0_SSFIFO0_R;
 		ADC0_ISC_R = (1<<0);
 }
 
@@ -29,6 +40,7 @@ void ADC0SS1_Handler()
 		ADC0_ISC_R = (1<<1);
 }
 
+
 int main()
 {
 	TIMER_initAdc(100);
@@ -37,7 +49,6 @@ int main()
 	GPIO_initPin(PORTD,PIN2,ANALOG,PERIPHERAL);
 	
 	Adc_init(ArrayOfAdcChannelGroups[0]);
-	Adc_init(ArrayOfAdcChannelGroups[1]);
 	
 	UART_init(UART1,UART_BAUD_9600);
 	

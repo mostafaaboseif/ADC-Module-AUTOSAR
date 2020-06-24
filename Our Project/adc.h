@@ -56,6 +56,7 @@ ADC_CC          =   0xFC8
 
 
 
+
 typedef uint8_t Adc_GroupType;
 
 typedef enum AdcChannel{
@@ -66,25 +67,36 @@ typedef enum Sequencer{
 	SS0,SS1,SS2,SS3
 }Sequencer;
 
+
 typedef enum AdcModule{
 	ADC0			= 0x40038000,
 	ADC1	 		= 0x40039000
 } AdcModule;
 
-typedef enum HwTrigger{
-ADC_TRIGGER_PROCESSOR,
-ADC_TRIGGER_COMP0,
-ADC_TRIGGER_COMP1,
-ADC_TRIGGER_COMP2,
-ADC_TRIGGER_EXTERNAL,
-ADC_TRIGGER_TIMER,
-ADC_TRIGGER_PWM0,
-ADC_TRIGGER_PWM1,
-ADC_TRIGGER_PWM2,
-ADC_TRIGGER_PWM3,
-ADC_TRIGGER_ALWAYS =0x0F
-}HwTrigger;
+typedef enum Adc_TriggerSourceType{
+ADC_TRIG_SRC_SW, 
+ADC_TRIG_SRC_HW
+}Adc_TriggerSourceType;
 
+typedef enum Adc_HwTriggerSourceType{
+ADC_TRIG_COMP0=1,
+ADC_TRIG_COMP1,
+ADC_TRIG_COMP2,
+ADC_TRIG_EXTERNAL,
+ADC_TRIG_TIMER,
+ADC_TRIG_PWM0,
+ADC_TRIG_PWM1,
+ADC_TRIG_PWM2,
+ADC_TRIG_PWM3,
+ADC_TRIG_ALWAYS =0x0F,
+NO_HW_TRIG
+}Adc_HwTriggerSourceType;
+
+
+typedef enum Adc_StreamBufferModeType{
+ADC_STREAM_BUFFER_LINEAR,
+ADC_STREAM_BUFFER_CIRCULAR
+}Adc_StreamBufferModeType;
 typedef enum SeqOffset{
 ADC_SS_BASE   = ADC_SSMUX0,
 ADC_SS_STEP   = ADC_SSMUX1 - ADC_SSMUX0,
@@ -94,13 +106,24 @@ ADC_SSFIFO    = ADC_SSFIFO0 - ADC_SSMUX0,
 ADC_SSFSTAT  	= ADC_SSFSTAT0 - ADC_SSMUX0
 }SeqOffset;
 
+typedef enum Adc_HwTriggerSignalType{
+ADC_HW_TRIG_RISING_EDGE, 
+ADC_HW_TRIG_FALLING_EDGE, 
+ADC_HW_TRIG_BOTH_EDGES
+}Adc_HwTriggerSignalType;
+
+
+
 
 typedef struct AdcChannelGroup{
-//uint8_t GroupId;
+uint8_t GroupId;
 AdcModule AdcModule;
 Sequencer Sequencer;
-HwTrigger HwTrigger;
-//uint8_t GroupPriority;
+Adc_TriggerSourceType Adc_TriggerSourceType;
+Adc_HwTriggerSourceType Adc_HwTriggerSourceType;
+Adc_HwTriggerSignalType Adc_HwTriggerSignalType;
+Adc_StreamBufferModeType Adc_StreamBufferModeType;
+uint8_t GroupPriority;
 uint8_t NbChannels;
 AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 }AdcChannelGroup;
@@ -110,6 +133,10 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 void Adc_init(AdcChannelGroup);
 
-void Adc_SetupResultBuffer (AdcModule,volatile uint32_t *buffer_ptr);
+void Adc_SetupResultBuffer (AdcModule , volatile uint32_t *buffer_ptr);
 
 void Adc_StartGroupConversion ( Adc_GroupType Group );
+
+void Adc_EnableGroupNotification(int groupId);
+
+void Adc_DisableGroupNotification(int groupId);

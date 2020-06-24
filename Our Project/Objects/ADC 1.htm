@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\ADC 1.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ADC 1.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Jun 24 07:02:59 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Jun 24 10:33:13 2020
 <BR><P>
-<H3>Maximum Stack Usage =        248 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        264 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 <P>
@@ -382,7 +382,7 @@ Global Symbols
 <P><STRONG><a name="[e8]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[8b]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1272,14 +1272,14 @@ Global Symbols
 
 <P><STRONG><a name="[f4]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[1a]"></a>ADC0SS0_Handler</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.ADC0SS0_Handler))
+<P><STRONG><a name="[1a]"></a>ADC0SS0_Handler</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(i.ADC0SS0_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
 <P><STRONG><a name="[1b]"></a>ADC0SS1_Handler</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.ADC0SS1_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
-<P><STRONG><a name="[ba]"></a>Adc_init</STRONG> (Thumb, 308 bytes, Stack size 20 bytes, adc.o(i.Adc_init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = Adc_init
+<P><STRONG><a name="[ba]"></a>Adc_init</STRONG> (Thumb, 386 bytes, Stack size 16 bytes, adc.o(i.Adc_init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Adc_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1510,8 +1510,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
 </UL>
 
-<P><STRONG><a name="[8c]"></a>main</STRONG> (Thumb, 108 bytes, Stack size 0 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
+<P><STRONG><a name="[8c]"></a>main</STRONG> (Thumb, 110 bytes, Stack size 16 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendString

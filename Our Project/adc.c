@@ -14,24 +14,33 @@ void Adc_init(AdcChannelGroup AdcChannelGroup)
 		while(!(SYSCTL_PRADC_R |= 0x2));
 		NVIC_EN1_R |= (1<<(16+AdcChannelGroup.Sequencer));
 	}
-	
+		
+		//disable sequencer
 	Memory(AdcChannelGroup.AdcModule,ADC_ACTSS) &= ~(1<<AdcChannelGroup.Sequencer);
-	Memory(AdcChannelGroup.AdcModule,ADC_EMUX) |= (AdcChannelGroup.HwTrigger<<(AdcChannelGroup.Sequencer*4)) ; 
-	Memory(AdcChannelGroup.AdcModule,ADC_IM) |= (1<<AdcChannelGroup.Sequencer);
+	Memory(AdcChannelGroup.AdcModule,ADC_IM) |= (1<<AdcChannelGroup.Sequencer);	
 	
+		//select trigger source
+	if(AdcChannelGroup.Adc_TriggerSourceType == ADC_TRIG_SRC_SW)
+		Memory(AdcChannelGroup.AdcModule,ADC_EMUX) |= (0<<(AdcChannelGroup.Sequencer*4)) ; 
+	else if(AdcChannelGroup.Adc_TriggerSourceType == ADC_TRIG_SRC_HW)
+		Memory(AdcChannelGroup.AdcModule,ADC_EMUX) |= (AdcChannelGroup.Adc_HwTriggerSourceType<<(AdcChannelGroup.Sequencer*4)) ;
+	
+		//assign analog input pins
 	for(int i=0;i<AdcChannelGroup.NbChannels;i++)
 	{
 		Memory(AdcChannelGroup.AdcModule, ADC_SS_BASE + ADC_SS_STEP * AdcChannelGroup.Sequencer + ADC_SSMUX)
 					|= (AdcChannelGroup.ArrayOfAdcChannels[i]<<(4*i));
 		Memory(AdcChannelGroup.AdcModule,ADC_SS_BASE + ADC_SS_STEP * AdcChannelGroup.Sequencer + ADC_SSCTL)
-					|= (0x06<<(4*i));
+					|= (0x04<<(4*i));
 	}	
+		Memory(AdcChannelGroup.AdcModule,ADC_SS_BASE + ADC_SS_STEP * AdcChannelGroup.Sequencer + ADC_SSCTL)
+					|= (0x06<<(4*AdcChannelGroup.NbChannels));
+		
+		//assign priority for each group (sequencer)
+	Memory(AdcChannelGroup.AdcModule,ADC_SSPRI) |= (AdcChannelGroup.GroupPriority<<(AdcChannelGroup.Sequencer*4));
 	
-	//Memory(AdcChannelGroup.AdcModule,ADC_SSMUX3) |= AdcChannelGroup.InputPin;
-	//Memory(AdcChannelGroup.AdcModule,ADC_SSCTL3) |= 0x06;
-	
+		//enable sequencer
 	Memory(AdcChannelGroup.AdcModule,ADC_ACTSS) |= (1<<AdcChannelGroup.Sequencer);
-	Memory(AdcChannelGroup.AdcModule,ADC_ISC) |= (1<<AdcChannelGroup.Sequencer);
 
 }
 
@@ -60,3 +69,24 @@ void Adc_init(AdcChannelGroup AdcChannelGroup)
 //	}
 //	ADC0_PSSI_R = (1<< Current_Sequencer);
 //}
+
+void Adc_EnableGroupNotification(int groupId)
+{
+	AdcChannelGroup AdcChannelGroup = ArrayOfAdcChannelGroups[groupId];
+	Memory(AdcChannelGroup.AdcModule,ADC_IM) |= (1<<AdcChannelGroup.Sequencer);
+	if(AdcChannelGroup.AdcModule==ADC0) 
+		NVIC_EN0_R |= (1<<(14+AdcChannelGroup.Sequencer));
+	else if(AdcChannelGroup.AdcModule==ADC1)	
+		NVIC_EN1_R |= (1<<(16+AdcChannelGroup.Sequencer));	
+}
+
+void Adc_DisableGroupNotification(int groupId)
+{
+	AdcChannelGroup AdcChannelGroup = ArrayOfAdcChannelGroups[groupId];
+	Memory(AdcChannelGroup.AdcModule,ADC_IM) &= ~(1<<AdcChannelGroup.Sequencer);
+	if(AdcChannelGroup.AdcModule==ADC0) 
+		NVIC_EN0_R &= ~(1<<(14+AdcChannelGroup.Sequencer));
+	else if(AdcChannelGroup.AdcModule==ADC1)	
+		NVIC_EN1_R &= ~(1<<(16+AdcChannelGroup.Sequencer));	
+
+}

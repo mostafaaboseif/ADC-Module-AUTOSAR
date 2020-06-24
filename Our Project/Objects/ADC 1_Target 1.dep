@@ -5,7 +5,7 @@ I (gpio.h)(0x5EF16947)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (tm4c123gh6pm.h)(0x53886E7A)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5D9B2672)
-F (.\main.c)(0x5EF2DE6C)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\main.c)(0x5EF30D7D)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (tm4c123gh6pm.h)(0x53886E7A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (gpio.h)(0x5EF16947)
@@ -15,7 +15,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9B2678)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9B267A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9B267A)
 I (timer.h)(0x5EF0ACAC)
-I (adc.h)(0x5EF2DE3A)
+I (adc.h)(0x5EF30FC3)
 F (.\uart.c)(0x5EF2D81C)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
 I (uart.h)(0x5EF2D82F)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
@@ -31,8 +31,8 @@ I (tm4c123gh6pm.h)(0x53886E7A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (gpio.h)(0x5EF16947)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5D9B2672)
-F (.\adc.c)(0x5EF2DE7C)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
-I (adc.h)(0x5EF2DE3A)
+F (.\adc.c)(0x5EF30FB4)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
+I (adc.h)(0x5EF30FC3)
 I (gpio.h)(0x5EF16947)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (tm4c123gh6pm.h)(0x53886E7A)
