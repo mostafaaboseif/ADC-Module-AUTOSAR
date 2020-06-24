@@ -1,8 +1,41 @@
+
+/* ---------------------------------- INCLUDES ---------------------------------- */
+
 #include "gpio.h"
+
+/* ---------------------------------- CONSTANTS ---------------------------------- */
 
 #define MAX_NB_CHANNELS 8
 #define MAX_NB_GROUPS 8
 
+#define ADC_PRIORITY_IMPLEMENTATION				ADC_PRIORITY_HW
+#define ADC_RESULT_ALIGNMENT					ADC_ALIGN_RIGHT
+
+/* ---------------------------------- PRIMITIVE TYPES ---------------------------------- */
+
+typedef uint8_t Adc_GroupType;
+
+/* ---------------------------------- ENUMS ---------------------------------- */
+//In Progress
+typedef enum Adc_StatusType{
+ADC_IDLE,
+ADC_BUSY,
+ADC_COMPLETED,
+ADC_STREAM_COMPLETED
+}Adc_StatusType;
+
+typedef enum Adc_GroupConvModeType{
+ADC_CONV_MODE_ONESHOT=0,
+ADC_CONV_MODE_CONTINUOUS=0xF
+}Adc_GroupConvModeType;
+
+typedef enum Adc_GroupAccessModeType{
+ADC_ACCESS_MODE_SINGLE,
+ADC_ACCESS_MODE_STREAMING
+}Adc_GroupAccessModeType;
+
+
+//Implementation Specific
 typedef enum ADCRegOffset{
 ADC_ACTSS       =   0x000,  
 ADC_RIS         =   0x004, 
@@ -57,12 +90,9 @@ ADC_CC          =   0xFC8
 
 
 
-typedef uint8_t Adc_GroupType;
-
 typedef enum AdcChannel{
 PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5 
 }AdcChannel;
-
 typedef enum Sequencer{
 	SS0,SS1,SS2,SS3
 }Sequencer;
@@ -73,6 +103,9 @@ typedef enum AdcModule{
 	ADC1	 		= 0x40039000
 } AdcModule;
 
+
+
+//AUTOSAR Requirements
 typedef enum Adc_TriggerSourceType{
 ADC_TRIG_SRC_SW, 
 ADC_TRIG_SRC_HW
@@ -115,6 +148,24 @@ ADC_HW_TRIG_BOTH_EDGES
 
 
 
+typedef enum Adc_ResultAlignmentType{
+ADC_ALIGN_LEFT,
+ADC_ALIGN_RIGHT
+}Adc_ResultAlignmentType;
+
+typedef enum Adc_PriorityImplementationType{
+ADC_PRIORITY_NONE,
+ADC_PRIORITY_HW,
+ADC_PRIORITY_HW_SW
+}Adc_PriorityImplementationType;
+
+
+
+
+
+
+/* ---------------------------------- STRUCTS ---------------------------------- */
+
 typedef struct AdcChannelGroup{
 uint8_t GroupId;
 AdcModule AdcModule;
@@ -129,7 +180,8 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 }AdcChannelGroup;
 
 
-//array to be intialized in the ADC_init function with the groups
+
+/* ---------------------------------- FUNCTION DECLARATIONS ---------------------------------- */
 
 void Adc_init(AdcChannelGroup);
 

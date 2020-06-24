@@ -1,6 +1,13 @@
+
+/* ---------------------------------- INCLUDES ---------------------------------- */
+
 #include "adc.h"
 
+/* --------------------------- GLOBAL EXTERN VARIABLES --------------------------- */
+
 extern AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
+
+/* ----------------------------- APIs IMPLEMENTATION ----------------------------- */
 
 void Adc_init(AdcChannelGroup AdcChannelGroup)
 {
@@ -17,6 +24,8 @@ void Adc_init(AdcChannelGroup AdcChannelGroup)
 		
 		//disable sequencer
 	Memory(AdcChannelGroup.AdcModule,ADC_ACTSS) &= ~(1<<AdcChannelGroup.Sequencer);
+	
+		//enable interrupts
 	Memory(AdcChannelGroup.AdcModule,ADC_IM) |= (1<<AdcChannelGroup.Sequencer);	
 	
 		//select trigger source
@@ -70,6 +79,8 @@ void Adc_init(AdcChannelGroup AdcChannelGroup)
 //	ADC0_PSSI_R = (1<< Current_Sequencer);
 //}
 
+
+//to enable interrupts for a specific group
 void Adc_EnableGroupNotification(int groupId)
 {
 	AdcChannelGroup AdcChannelGroup = ArrayOfAdcChannelGroups[groupId];
@@ -80,6 +91,7 @@ void Adc_EnableGroupNotification(int groupId)
 		NVIC_EN1_R |= (1<<(16+AdcChannelGroup.Sequencer));	
 }
 
+//to disable interrupts for a specific group
 void Adc_DisableGroupNotification(int groupId)
 {
 	AdcChannelGroup AdcChannelGroup = ArrayOfAdcChannelGroups[groupId];
