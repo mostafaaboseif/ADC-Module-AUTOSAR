@@ -80,6 +80,9 @@ void Adc_init(AdcChannelGroup AdcChannelGroup)
 //}
 
 
+
+
+#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
 //to enable interrupts for a specific group
 void Adc_EnableGroupNotification(int groupId)
 {
@@ -102,3 +105,5 @@ void Adc_DisableGroupNotification(int groupId)
 		NVIC_EN1_R &= ~(1<<(16+AdcChannelGroup.Sequencer));	
 
 }
+#endif
+

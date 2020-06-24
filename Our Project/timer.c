@@ -8,7 +8,7 @@ SYSCTL_RCGCTIMER_R |= 1; /* enable clock to Timer Block 0 */
 while(!(SYSCTL_PRTIMER_R |= 0x1));
 TIMER0_CTL_R = 0; /* disable WTimer before initialization */
 TIMER0_CFG_R = 0x04; /* 16-bit option */
-TIMER0_TAMR_R = 0x02; /* periodic mode and down-counter */
+TIMER0_TAMR_R = 0x02; /* periodic mode and down-counter */   //for one shot = 0x01;
 TIMER0_TAILR_R = samplePeriod*CLK_SPEED/1000; /* Timer A interval load value reg (1 s) */
 TIMER0_CTL_R |= 0x20; /* timer triggers ADC */
 TIMER0_CTL_R |= 0x01; /* enable Timer A after initialization */

@@ -9,3 +9,4 @@
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: timer.h
 .\objects\main.o: adc.h
+.\objects\main.o: Adc_PCCfg.h

@@ -407,6 +407,11 @@
               <FileType>1</FileType>
               <FilePath>.\adc.c</FilePath>
             </File>
+            <File>
+              <FileName>Adc_PBCfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Adc_PBCfg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -66,5 +66,5 @@ void UART_sendByteStream(Uart uart, const uint8_t *data, const uint8_t size);
 void UART_attachBuffer(Uart uart);
 void UART_interruptHandler(Uart uart);
 void UART_readString(char *dest);
-//uint8_t UART_bufferAvailable();
+uint8_t UART_bufferAvailable(void);
 #endif

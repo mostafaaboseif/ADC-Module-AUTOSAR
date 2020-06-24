@@ -2,14 +2,12 @@
 /* ---------------------------------- INCLUDES ---------------------------------- */
 
 #include "gpio.h"
+#include "Adc_PCCfg.h"
 
 /* ---------------------------------- CONSTANTS ---------------------------------- */
 
 #define MAX_NB_CHANNELS 8
 #define MAX_NB_GROUPS 8
-
-#define ADC_PRIORITY_IMPLEMENTATION				ADC_PRIORITY_HW
-#define ADC_RESULT_ALIGNMENT					ADC_ALIGN_RIGHT
 
 /* ---------------------------------- PRIMITIVE TYPES ---------------------------------- */
 
@@ -121,7 +119,7 @@ ADC_TRIG_PWM0,
 ADC_TRIG_PWM1,
 ADC_TRIG_PWM2,
 ADC_TRIG_PWM3,
-ADC_TRIG_ALWAYS =0x0F,
+ADC_TRIG_ALWAYS =0xF,
 NO_HW_TRIG
 }Adc_HwTriggerSourceType;
 
@@ -173,6 +171,8 @@ Sequencer Sequencer;
 Adc_TriggerSourceType Adc_TriggerSourceType;
 Adc_HwTriggerSourceType Adc_HwTriggerSourceType;
 Adc_HwTriggerSignalType Adc_HwTriggerSignalType;
+Adc_GroupConvModeType Adc_GroupConvModeType;
+Adc_GroupAccessModeType Adc_GroupAccessModeType;
 Adc_StreamBufferModeType Adc_StreamBufferModeType;
 uint8_t GroupPriority;
 uint8_t NbChannels;
@@ -185,10 +185,22 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 void Adc_init(AdcChannelGroup);
 
+#if (ADC_DEINIT_API==STD_ON)		
+void Adc_DeInit (void);
+#endif
+
 void Adc_SetupResultBuffer (AdcModule , volatile uint32_t *buffer_ptr);
 
+#if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
 void Adc_StartGroupConversion ( Adc_GroupType Group );
+void Adc_StopGroupConversion ( Adc_GroupType Group );
+#endif
 
+#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
 void Adc_EnableGroupNotification(int groupId);
-
 void Adc_DisableGroupNotification(int groupId);
+#endif
+
+#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)
+void Adc_ReadGroup ( void );
+#endif

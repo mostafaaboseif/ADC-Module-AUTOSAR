@@ -10,22 +10,8 @@
 
 volatile uint32_t adcResult1=0,adcResult2=0;
 
+extern AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
 
-AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS] = {
-{
-0,    //ID
-ADC0,
-SS0, 
-ADC_TRIG_SRC_SW, 
-NO_HW_TRIG,
-ADC_HW_TRIG_RISING_EDGE, 
-ADC_STREAM_BUFFER_LINEAR,
-0,   //Priority
-2,   //Nb of channels
-{PE3,PD2} 
-}
-//{ADC0, SS1, ADC_TRIGGER_TIMER, 1, {PD2} }
-};
 
 void ADC0SS0_Handler()
 {
