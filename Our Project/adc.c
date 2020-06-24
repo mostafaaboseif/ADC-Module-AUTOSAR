@@ -1,6 +1,6 @@
 #include "adc.h"
 
-
+extern AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
 
 void Adc_init(AdcChannelGroup AdcChannelGroup)
 {

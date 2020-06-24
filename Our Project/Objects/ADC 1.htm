@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\ADC 1.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ADC 1.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Jun 24 06:39:33 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Jun 24 07:02:59 2020
 <BR><P>
-<H3>Maximum Stack Usage =        280 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        248 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 <P>
@@ -35,7 +35,6 @@ Mutually Recursive functions
  <LI><a href="#[17]">PWM0_1_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[17]">PWM0_1_Handler</a><BR>
  <LI><a href="#[18]">PWM0_2_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[18]">PWM0_2_Handler</a><BR>
  <LI><a href="#[19]">QEI0_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[19]">QEI0_Handler</a><BR>
- <LI><a href="#[1b]">ADC0SS1_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1b]">ADC0SS1_Handler</a><BR>
  <LI><a href="#[1c]">ADC0SS2_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1c]">ADC0SS2_Handler</a><BR>
  <LI><a href="#[1d]">ADC0SS3_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1d]">ADC0SS3_Handler</a><BR>
  <LI><a href="#[1e]">WDT0_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1e]">WDT0_Handler</a><BR>
@@ -65,6 +64,7 @@ Mutually Recursive functions
  <LI><a href="#[38]">PWM0_3_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[38]">PWM0_3_Handler</a><BR>
  <LI><a href="#[39]">UDMA_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[39]">UDMA_Handler</a><BR>
  <LI><a href="#[3a]">UDMAERR_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3a]">UDMAERR_Handler</a><BR>
+ <LI><a href="#[3b]">ADC1SS0_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3b]">ADC1SS0_Handler</a><BR>
  <LI><a href="#[3c]">ADC1SS1_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3c]">ADC1SS1_Handler</a><BR>
  <LI><a href="#[3d]">ADC1SS2_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3d]">ADC1SS2_Handler</a><BR>
  <LI><a href="#[3e]">ADC1SS3_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3e]">ADC1SS3_Handler</a><BR>
@@ -131,10 +131,10 @@ Mutually Recursive functions
 Function Pointers
 </H3><UL>
  <LI><a href="#[1a]">ADC0SS0_Handler</a> from main.o(i.ADC0SS0_Handler) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[1b]">ADC0SS1_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[1b]">ADC0SS1_Handler</a> from main.o(i.ADC0SS1_Handler) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[1c]">ADC0SS2_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[1d]">ADC0SS3_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[3b]">ADC1SS0_Handler</a> from main.o(i.ADC1SS0_Handler) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[3b]">ADC1SS0_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[3c]">ADC1SS1_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[3d]">ADC1SS2_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[3e]">ADC1SS3_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
@@ -382,7 +382,7 @@ Global Symbols
 <P><STRONG><a name="[e8]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[8b]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 280 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -523,13 +523,6 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QEI0_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QEI0_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[1b]"></a>ADC0SS1_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS1_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS1_Handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
@@ -733,6 +726,13 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UDMAERR_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UDMAERR_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
+<P><STRONG><a name="[3b]"></a>ADC1SS0_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
+<BR><BR>[Calls]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS0_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS0_Handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
@@ -1275,7 +1275,7 @@ Global Symbols
 <P><STRONG><a name="[1a]"></a>ADC0SS0_Handler</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.ADC0SS0_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
-<P><STRONG><a name="[3b]"></a>ADC1SS0_Handler</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.ADC1SS0_Handler))
+<P><STRONG><a name="[1b]"></a>ADC0SS1_Handler</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.ADC0SS1_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
 <P><STRONG><a name="[ba]"></a>Adc_init</STRONG> (Thumb, 308 bytes, Stack size 20 bytes, adc.o(i.Adc_init))
@@ -1510,8 +1510,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
 </UL>
 
-<P><STRONG><a name="[8c]"></a>main</STRONG> (Thumb, 146 bytes, Stack size 32 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 280 + Unknown Stack Size
+<P><STRONG><a name="[8c]"></a>main</STRONG> (Thumb, 108 bytes, Stack size 0 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
 <LI>Call Chain = main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendString

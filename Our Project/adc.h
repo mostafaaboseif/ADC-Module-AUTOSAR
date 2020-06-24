@@ -94,6 +94,7 @@ ADC_SSFIFO    = ADC_SSFIFO0 - ADC_SSMUX0,
 ADC_SSFSTAT  	= ADC_SSFSTAT0 - ADC_SSMUX0
 }SeqOffset;
 
+
 typedef struct AdcChannelGroup{
 //uint8_t GroupId;
 AdcModule AdcModule;
@@ -106,7 +107,6 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 
 //array to be intialized in the ADC_init function with the groups
-static AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
 
 void Adc_init(AdcChannelGroup);
 
