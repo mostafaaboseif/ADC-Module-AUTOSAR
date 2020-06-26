@@ -14,7 +14,7 @@
 
 typedef uint8_t Adc_ChannelType;
 typedef uint8_t Adc_GroupType; //group index in array (0 - 7)
-typedef uint16_t Adc_ValueGroupType;
+typedef int16_t Adc_ValueGroupType;
 typedef uint8_t Adc_PrescaleType;
 typedef uint8_t Adc_ConversionTimeType; 
 typedef uint8_t Adc_SamplingTimeType;
@@ -23,6 +23,10 @@ typedef uint8_t Adc_GroupPriorityType;
 typedef uint8_t Adc_StreamNumSampleType;
 
 /* ---------------------------------- ENUMS ---------------------------------- */
+typedef enum 
+{
+FALSE,TRUE
+}boolean; 
 //In Progress
 typedef enum Adc_StatusType{
 ADC_IDLE,
@@ -203,7 +207,7 @@ void Adc_init(AdcChannelGroup);
 void Adc_DeInit (void);
 #endif
 
-void Adc_SetupResultBuffer (Adc_GroupType Adc_GroupType ,volatile Adc_ValueGroupType** buffer_ptr );
+Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group, Adc_ValueGroupType* DataBufferPtr ); 
 
 #if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
 void Adc_StartGroupConversion ( Adc_GroupType Adc_GroupType );
@@ -220,3 +224,4 @@ void Adc_ReadGroup ( void );
 #endif
 
 Adc_StreamNumSampleType Adc_GetStreamLastPointer ( Adc_GroupType Group, volatile Adc_ValueGroupType** PtrToSamplePtr );
+void Adc_StopGroupConversion( Adc_GroupType Group ); 

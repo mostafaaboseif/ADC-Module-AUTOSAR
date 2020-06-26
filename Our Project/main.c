@@ -34,16 +34,29 @@ int main()
 //	volatile Adc_ValueGroupType* buffer_ptr3 = buffer_ptr1++;
 	
 	volatile Adc_ValueGroupType** PtrToSamplePtr;
-	
-	
+	Adc_ValueGroupType G0_ResultBuffer[2] ,G1_ResultBuffer[1] ; 
+	if(Adc_SetupResultBuffer(1,G1_ResultBuffer)!=E_OK)
+	{
+		// raising an error
+	}
 	while(1)
 	{
+		
 	//	Adc_StartGroupConversion(0);
 		Adc_StartGroupConversion(1);
+
 		//Adc_GetStreamLastPointer(1,PtrToSamplePtr);
 	
-		UART_sendInt(UART1,Adc_GetStreamLastPointer(1,PtrToSamplePtr));
+	//	UART_sendInt(UART1,Adc_GetStreamLastPointer(1,PtrToSamplePtr));
+
+//			UART_sendString(UART1,"channel 0 sample: \r\n");
+//  		UART_sendInt(UART1,G1_ResultBuffer[0]);
+/*
+		UART_sendString(UART1,"channel 1 sample: \r\n");
+		UART_sendInt(UART1,G0_ResultBuffer[1]);
+*/ 
 //			
+		
 		
 //		for(int i=0 ; i<3 ; i++)
 //		{	
