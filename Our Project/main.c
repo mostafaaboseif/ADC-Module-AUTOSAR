@@ -24,39 +24,34 @@ int main()
 	Adc_init(ArrayOfAdcChannelGroups[1]);
 	
 	UART_init(UART1,UART_BAUD_9600);
-
-//	volatile Adc_ValueGroupType* buffer_ptr1 = NULL;
-//	volatile Adc_ValueGroupType* buffer_ptr2 = NULL;
-//	
-//	Adc_SetupResultBuffer (0 , &buffer_ptr1 );
-//	Adc_SetupResultBuffer (1 , &buffer_ptr2 );
-//	
-//	volatile Adc_ValueGroupType* buffer_ptr3 = buffer_ptr1++;
 	
-	volatile Adc_ValueGroupType** PtrToSamplePtr;
 	Adc_ValueGroupType G0_ResultBuffer[2] ,G1_ResultBuffer[1] ; 
-	if(Adc_SetupResultBuffer(1,G1_ResultBuffer)!=E_OK)
-	{
-		// raising an error
-	}
+	if(Adc_SetupResultBuffer(0,G0_ResultBuffer)!=E_OK){	}
+	if(Adc_SetupResultBuffer(1,G1_ResultBuffer)!=E_OK){	}
+	
+	Adc_StartGroupConversion(0);
+	Adc_StartGroupConversion(1);
+	
 	while(1)
 	{
 		
-	//	Adc_StartGroupConversion(0);
-		Adc_StartGroupConversion(1);
-
-		//Adc_GetStreamLastPointer(1,PtrToSamplePtr);
-	
-	//	UART_sendInt(UART1,Adc_GetStreamLastPointer(1,PtrToSamplePtr));
-
-//			UART_sendString(UART1,"channel 0 sample: \r\n");
-//  		UART_sendInt(UART1,G1_ResultBuffer[0]);
-/*
-		UART_sendString(UART1,"channel 1 sample: \r\n");
-		UART_sendInt(UART1,G0_ResultBuffer[1]);
-*/ 
-//			
 		
+//		Adc_StartGroupConversion(1);
+
+//		for(int i=0 ; i<3 ; i++)
+//		{
+			UART_sendString(UART1,"channel 1 sample: \n");
+			UART_sendInt(UART1,G0_ResultBuffer[0]);
+			UART_sendInt(UART1,G0_ResultBuffer[1]);
+			UART_sendInt(UART1,G1_ResultBuffer[0]);
+		
+//		}
+		
+		
+//		UART_sendString(UART1,"channel 1 sample: \n");
+//		UART_sendInt(UART1,G0_ResultBuffer[0]);
+//		UART_sendInt(UART1,G0_ResultBuffer[1]);
+//		UART_sendInt(UART1,G1_ResultBuffer[0]);		
 		
 //		for(int i=0 ; i<3 ; i++)
 //		{	
@@ -68,12 +63,6 @@ int main()
 //			UART_sendInt(UART1,adcResult[1][0][i]);
 //		}
 		
-//		UART_sendString(UART1,"1st Result: ");
-//		UART_sendInt(UART1,*buffer_ptr1);		
-//		UART_sendString(UART1,"2nd Result: ");
-//		UART_sendInt(UART1,*buffer_ptr2);		
-//		UART_sendString(UART1,"3rd Result: ");
-//		UART_sendInt(UART1,*buffer_ptr3);			
 	}
 }
 
