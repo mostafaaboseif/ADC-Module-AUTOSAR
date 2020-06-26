@@ -55,7 +55,7 @@ void ADC0SS1_Handler()
 {
 	uint8_t Adc_GroupType = getGroupId(ADC0,SS1);
 	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			adcResult[1][i][sampleNb[1]] = ADC0_SSFIFO1_R;
+			*(DataBufferPtrAddr[Adc_GroupType]+i) = ADC0_SSFIFO1_R;
 	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
 		sampleNb[1]=(sampleNb[1]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
 	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
