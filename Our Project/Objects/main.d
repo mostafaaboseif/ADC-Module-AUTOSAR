@@ -10,3 +10,4 @@
 .\objects\main.o: timer.h
 .\objects\main.o: adc.h
 .\objects\main.o: Adc_PCCfg.h
+.\objects\main.o: Std_Types.h

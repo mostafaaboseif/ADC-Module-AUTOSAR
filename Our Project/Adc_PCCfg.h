@@ -2,6 +2,9 @@
 /*user defines the number of channels used in the project*/
 #define NB_OF_GROUPS  2
 
+/*user defines the number of channels used in the project*/
+#define MAX_NB_OF_SAMPLES_PER_CHANNEL   5
+
 /* Adds / removes the services Adc_StartGroupConversion() and Adc_StopGroupConversion() from the code. */
 #define ADC_ENABLE_START_STOP_GROUP_API			STD_ON
 

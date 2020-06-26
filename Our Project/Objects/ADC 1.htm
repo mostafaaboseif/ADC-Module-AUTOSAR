@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\ADC 1.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ADC 1.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Jun 26 02:29:56 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Jun 26 08:27:31 2020
 <BR><P>
-<H3>Maximum Stack Usage =        272 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        264 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 <P>
@@ -35,9 +35,6 @@ Mutually Recursive functions
  <LI><a href="#[17]">PWM0_1_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[17]">PWM0_1_Handler</a><BR>
  <LI><a href="#[18]">PWM0_2_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[18]">PWM0_2_Handler</a><BR>
  <LI><a href="#[19]">QEI0_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[19]">QEI0_Handler</a><BR>
- <LI><a href="#[1a]">ADC0SS0_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1a]">ADC0SS0_Handler</a><BR>
- <LI><a href="#[1c]">ADC0SS2_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1c]">ADC0SS2_Handler</a><BR>
- <LI><a href="#[1d]">ADC0SS3_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1d]">ADC0SS3_Handler</a><BR>
  <LI><a href="#[1e]">WDT0_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1e]">WDT0_Handler</a><BR>
  <LI><a href="#[1f]">TIMER0A_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1f]">TIMER0A_Handler</a><BR>
  <LI><a href="#[20]">TIMER0B_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">TIMER0B_Handler</a><BR>
@@ -65,9 +62,6 @@ Mutually Recursive functions
  <LI><a href="#[38]">PWM0_3_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[38]">PWM0_3_Handler</a><BR>
  <LI><a href="#[39]">UDMA_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[39]">UDMA_Handler</a><BR>
  <LI><a href="#[3a]">UDMAERR_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3a]">UDMAERR_Handler</a><BR>
- <LI><a href="#[3c]">ADC1SS1_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3c]">ADC1SS1_Handler</a><BR>
- <LI><a href="#[3d]">ADC1SS2_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3d]">ADC1SS2_Handler</a><BR>
- <LI><a href="#[3e]">ADC1SS3_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3e]">ADC1SS3_Handler</a><BR>
  <LI><a href="#[3f]">GPIOJ_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3f]">GPIOJ_Handler</a><BR>
  <LI><a href="#[40]">GPIOK_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[40]">GPIOK_Handler</a><BR>
  <LI><a href="#[41]">GPIOL_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[41]">GPIOL_Handler</a><BR>
@@ -130,14 +124,14 @@ Mutually Recursive functions
 <H3>
 Function Pointers
 </H3><UL>
- <LI><a href="#[1a]">ADC0SS0_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[1a]">ADC0SS0_Handler</a> from adc.o(i.ADC0SS0_Handler) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[1b]">ADC0SS1_Handler</a> from adc.o(i.ADC0SS1_Handler) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[1c]">ADC0SS2_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[1d]">ADC0SS3_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[1c]">ADC0SS2_Handler</a> from adc.o(i.ADC0SS2_Handler) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[1d]">ADC0SS3_Handler</a> from adc.o(i.ADC0SS3_Handler) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[3b]">ADC1SS0_Handler</a> from adc.o(i.ADC1SS0_Handler) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[3c]">ADC1SS1_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[3d]">ADC1SS2_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[3e]">ADC1SS3_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[3c]">ADC1SS1_Handler</a> from adc.o(i.ADC1SS1_Handler) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[3d]">ADC1SS2_Handler</a> from adc.o(i.ADC1SS2_Handler) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[3e]">ADC1SS3_Handler</a> from adc.o(i.ADC1SS3_Handler) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[6]">BusFault_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[33]">CAN0_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[34]">CAN1_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
@@ -382,7 +376,7 @@ Global Symbols
 <P><STRONG><a name="[eb]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[8b]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 272 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -523,27 +517,6 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QEI0_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QEI0_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[1a]"></a>ADC0SS0_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS0_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS0_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[1c]"></a>ADC0SS2_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS2_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS2_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[1d]"></a>ADC0SS3_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS3_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS3_Handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
@@ -733,27 +706,6 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UDMAERR_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UDMAERR_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[3c]"></a>ADC1SS1_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS1_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS1_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[3d]"></a>ADC1SS2_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS2_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS2_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[3e]"></a>ADC1SS3_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS3_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS3_Handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
@@ -1202,8 +1154,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_errno_addr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
 </UL>
 
 <P><STRONG><a name="[96]"></a>_printf_int_common</STRONG> (Thumb, 178 bytes, Stack size 32 bytes, _printf_intcommon.o(.text))
@@ -1272,25 +1224,67 @@ Global Symbols
 
 <P><STRONG><a name="[f7]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[1b]"></a>ADC0SS1_Handler</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, adc.o(i.ADC0SS1_Handler))
+<P><STRONG><a name="[1a]"></a>ADC0SS0_Handler</STRONG> (Thumb, 196 bytes, Stack size 8 bytes, adc.o(i.ADC0SS0_Handler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC0SS0_Handler &rArr; getGroupId
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
+<P><STRONG><a name="[1b]"></a>ADC0SS1_Handler</STRONG> (Thumb, 198 bytes, Stack size 8 bytes, adc.o(i.ADC0SS1_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC0SS1_Handler &rArr; getGroupId
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
-<P><STRONG><a name="[3b]"></a>ADC1SS0_Handler</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, adc.o(i.ADC1SS0_Handler))
+<P><STRONG><a name="[1c]"></a>ADC0SS2_Handler</STRONG> (Thumb, 200 bytes, Stack size 8 bytes, adc.o(i.ADC0SS2_Handler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC0SS2_Handler &rArr; getGroupId
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
+<P><STRONG><a name="[1d]"></a>ADC0SS3_Handler</STRONG> (Thumb, 200 bytes, Stack size 8 bytes, adc.o(i.ADC0SS3_Handler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC0SS3_Handler &rArr; getGroupId
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
+<P><STRONG><a name="[3b]"></a>ADC1SS0_Handler</STRONG> (Thumb, 198 bytes, Stack size 8 bytes, adc.o(i.ADC1SS0_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC1SS0_Handler &rArr; getGroupId
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
-<P><STRONG><a name="[bc]"></a>Adc_SetupResultBuffer</STRONG> (Thumb, 160 bytes, Stack size 0 bytes, adc.o(i.Adc_SetupResultBuffer))
+<P><STRONG><a name="[3c]"></a>ADC1SS1_Handler</STRONG> (Thumb, 198 bytes, Stack size 8 bytes, adc.o(i.ADC1SS1_Handler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC1SS1_Handler &rArr; getGroupId
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
+<P><STRONG><a name="[3d]"></a>ADC1SS2_Handler</STRONG> (Thumb, 200 bytes, Stack size 8 bytes, adc.o(i.ADC1SS2_Handler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC1SS2_Handler &rArr; getGroupId
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
+<P><STRONG><a name="[3e]"></a>ADC1SS3_Handler</STRONG> (Thumb, 200 bytes, Stack size 8 bytes, adc.o(i.ADC1SS3_Handler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC1SS3_Handler &rArr; getGroupId
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getGroupId
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
+<P><STRONG><a name="[bd]"></a>Adc_GetStreamLastPointer</STRONG> (Thumb, 94 bytes, Stack size 0 bytes, adc.o(i.Adc_GetStreamLastPointer))
 <BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[bd]"></a>Adc_StartGroupConversion</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, adc.o(i.Adc_StartGroupConversion))
+<P><STRONG><a name="[bc]"></a>Adc_StartGroupConversion</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, adc.o(i.Adc_StartGroupConversion))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Adc_StartGroupConversion
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1424,8 +1418,8 @@ Global Symbols
 <LI>Call Chain = UART_sendInt &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendChar
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendString
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1436,18 +1430,12 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendInt
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[aa]"></a>__hardfp_log</STRONG> (Thumb, 872 bytes, Stack size 88 bytes, log.o(i.__hardfp_log))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_divzero
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmpeq
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
@@ -1455,6 +1443,11 @@ Global Symbols
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dneg
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_divzero
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmpeq
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;log
 </UL>
@@ -1462,17 +1455,17 @@ Global Symbols
 <P><STRONG><a name="[a2]"></a>__hardfp_log2</STRONG> (Thumb, 220 bytes, Stack size 32 bytes, log2.o(i.__hardfp_log2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;log
+<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;log
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;frexp
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmpeq
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_setPCTL
 </UL>
@@ -1480,8 +1473,8 @@ Global Symbols
 <P><STRONG><a name="[b6]"></a>__kernel_poly</STRONG> (Thumb, 248 bytes, Stack size 24 bytes, poly.o(i.__kernel_poly))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = __kernel_poly &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 </UL>
 <BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
 </UL>
@@ -1499,8 +1492,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
 </UL>
 
 <P><STRONG><a name="[ac]"></a>__mathlib_dbl_invalid</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, dunder.o(i.__mathlib_dbl_invalid))
@@ -1508,8 +1501,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
 </UL>
 
 <P><STRONG><a name="[b8]"></a>frexp</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, frexp.o(i.frexp))
@@ -1528,17 +1521,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
 </UL>
 
-<P><STRONG><a name="[8c]"></a>main</STRONG> (Thumb, 196 bytes, Stack size 24 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 272 + Unknown Stack Size
+<P><STRONG><a name="[8c]"></a>main</STRONG> (Thumb, 132 bytes, Stack size 16 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = main &rArr; UART_init &rArr; GPIO_setPCTL &rArr; __hardfp_log2 &rArr; log &rArr; __hardfp_log &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendString
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendInt
+<BR>[Calls]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_sendInt
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_init
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER_initAdc
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Adc_init
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Adc_StartGroupConversion
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Adc_SetupResultBuffer
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Adc_StartGroupConversion
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Adc_GetStreamLastPointer
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_initPin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
@@ -1561,16 +1553,16 @@ Global Symbols
 <P><STRONG><a name="[b3]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 </UL>
 
 <P><STRONG><a name="[be]"></a>_dadd</STRONG> (Thumb, 332 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsub1
+<BR><BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsub1
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
 <P><STRONG><a name="[c4]"></a>__fpl_dcmp_Inf</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dcmpi.o(x$fpl$dcmpinf), UNUSED)
@@ -1581,27 +1573,27 @@ Global Symbols
 <P><STRONG><a name="[b5]"></a>__aeabi_ddiv</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_ddiv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_divzero
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
 </UL>
 
 <P><STRONG><a name="[c2]"></a>_ddiv</STRONG> (Thumb, 552 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
+<BR><BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
 <P><STRONG><a name="[b1]"></a>__aeabi_cdcmpeq</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_cdcmpeq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
 </UL>
 
 <P><STRONG><a name="[c3]"></a>_dcmpeq</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
+<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
 <P><STRONG><a name="[a3]"></a>__aeabi_d2iz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfix.o(x$fpl$dfix))
@@ -1615,8 +1607,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[b2]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
-<BR><BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<BR><BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
 </UL>
 
 <P><STRONG><a name="[fd]"></a>_dflt</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt), UNUSED)
@@ -1634,8 +1626,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c6]"></a>_dcmple</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
+<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
 <P><STRONG><a name="[ff]"></a>__fpl_dcmple_InfNaN</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, dleqf.o(x$fpl$dleqf), UNUSED)
@@ -1643,31 +1635,31 @@ Global Symbols
 <P><STRONG><a name="[af]"></a>__aeabi_dmul</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_dmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;frexp
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log2
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_log
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;frexp
 </UL>
 
 <P><STRONG><a name="[c7]"></a>_dmul</STRONG> (Thumb, 332 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
+<BR><BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
 <P><STRONG><a name="[c1]"></a>__fpl_dnaninf</STRONG> (Thumb, 156 bytes, Stack size 16 bytes, dnaninf.o(x$fpl$dnaninf), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ddiv
+<BR><BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ddiv
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsub
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dfix
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
 </UL>
 
 <P><STRONG><a name="[c0]"></a>__fpl_dretinf</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dretinf.o(x$fpl$dretinf), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ddiv
+<BR><BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ddiv
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
 </UL>
 
 <P><STRONG><a name="[b4]"></a>__aeabi_drsub</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, daddsub_clz.o(x$fpl$drsb))
@@ -1688,8 +1680,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ca]"></a>_dsub</STRONG> (Thumb, 464 bytes, Stack size 32 bytes, daddsub_clz.o(x$fpl$dsub), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd1
+<BR><BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd1
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
 <P><STRONG><a name="[86]"></a>_fp_init</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, fpinit.o(x$fpl$fpinit))
@@ -1712,8 +1704,14 @@ Local Symbols
 <P><STRONG><a name="[9c]"></a>getGroupId</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, adc.o(i.getGroupId))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = getGroupId
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS0_Handler
+<BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS3_Handler
+<LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS2_Handler
+<LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS1_Handler
+<LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1SS0_Handler
+<LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS3_Handler
+<LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS2_Handler
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS1_Handler
+<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0SS0_Handler
 </UL>
 
 <P><STRONG><a name="[7b]"></a>_printf_input_char</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, _printf_char_common.o(.text))

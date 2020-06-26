@@ -5,3 +5,4 @@
 .\objects\adc.o: tm4c123gh6pm.h
 .\objects\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\adc.o: Adc_PCCfg.h
+.\objects\adc.o: Std_Types.h
