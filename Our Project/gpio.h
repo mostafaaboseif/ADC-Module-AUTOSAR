@@ -23,6 +23,7 @@
 #define SYSCTL_PRGPIO   		((volatile uint32_t*)0x400FEA08)
 #define SYSCTL_RCGCGPIO 		((volatile uint32_t*)0x400FE608)
 #define NVIC_EN0            ((volatile uint32_t*)0xE000E100)
+#define NVIC_EN1            ((volatile uint32_t*)0xE000E104)
 #define RCGC2_REG				    ((volatile uint32_t *)0x400FE108)	// really don't know why we are using this
 
 #define UNLOCK					0x4C4F434B

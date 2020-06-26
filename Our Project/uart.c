@@ -46,7 +46,6 @@ void UART_sendInt(Uart uart, int num)
 	char buffer[15]; 
   sprintf(buffer, "%d", num);    
 	UART_sendString(UART1,buffer);
-	UART_sendChar(UART1,'\r');
 	UART_sendChar(UART1,'\n');
 }
 

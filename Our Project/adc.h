@@ -22,16 +22,21 @@ ADC_COMPLETED,
 ADC_STREAM_COMPLETED
 }Adc_StatusType;
 
-typedef enum Adc_GroupConvModeType{
+typedef enum Adc_GroupConvModeType{  //Sherif Tasnim Thomas
 ADC_CONV_MODE_ONESHOT=0,
 ADC_CONV_MODE_CONTINUOUS=0xF
 }Adc_GroupConvModeType;
 
-typedef enum Adc_GroupAccessModeType{
+typedef enum Adc_GroupAccessModeType{  //Gemy Osama
 ADC_ACCESS_MODE_SINGLE,
 ADC_ACCESS_MODE_STREAMING
 }Adc_GroupAccessModeType;
 
+
+typedef enum Adc_StreamBufferModeType{ //Amgad Marwan
+ADC_STREAM_BUFFER_LINEAR,
+ADC_STREAM_BUFFER_CIRCULAR
+}Adc_StreamBufferModeType;
 
 //Implementation Specific
 typedef enum ADCRegOffset{
@@ -123,11 +128,6 @@ ADC_TRIG_ALWAYS =0xF,
 NO_HW_TRIG
 }Adc_HwTriggerSourceType;
 
-
-typedef enum Adc_StreamBufferModeType{
-ADC_STREAM_BUFFER_LINEAR,
-ADC_STREAM_BUFFER_CIRCULAR
-}Adc_StreamBufferModeType;
 typedef enum SeqOffset{
 ADC_SS_BASE   = ADC_SSMUX0,
 ADC_SS_STEP   = ADC_SSMUX1 - ADC_SSMUX0,
@@ -179,7 +179,10 @@ uint8_t NbChannels;
 AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 }AdcChannelGroup;
 
+/*----------------------------------- FUNCTION-LIKE MACROS -----------------------------------*/
 
+#define INT_ENABLE_ADC0(X)    *NVIC_EN0 |= (1<<(14+X));
+#define INT_ENABLE_ADC1(X)    *NVIC_EN1 |= (1<<(16+X));
 
 /* ---------------------------------- FUNCTION DECLARATIONS ---------------------------------- */
 
@@ -189,7 +192,7 @@ void Adc_init(AdcChannelGroup);
 void Adc_DeInit (void);
 #endif
 
-void Adc_SetupResultBuffer (AdcModule ,Sequencer ,volatile uint32_t *buffer_ptr);
+void Adc_SetupResultBuffer ( int groupId ,volatile uint32_t** buffer_ptr );
 
 #if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
 void Adc_StartGroupConversion ( Adc_GroupType Group );
