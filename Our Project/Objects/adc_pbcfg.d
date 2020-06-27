@@ -6,3 +6,8 @@
 .\objects\adc_pbcfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\adc_pbcfg.o: Adc_PCCfg.h
 .\objects\adc_pbcfg.o: Std_Types.h
+.\objects\adc_pbcfg.o: uart.h
+.\objects\adc_pbcfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\adc_pbcfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\adc_pbcfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\adc_pbcfg.o: timer.h

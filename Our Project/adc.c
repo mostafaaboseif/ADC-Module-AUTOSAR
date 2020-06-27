@@ -4,14 +4,8 @@
 
 /* --------------------------- GLOBAL STATIC VARIABLES --------------------------- */
 
-volatile Adc_ValueGroupType adcResult[MAX_NB_GROUPS][MAX_NB_CHANNELS][MAX_NB_OF_SAMPLES_PER_CHANNEL];
+volatile Adc_ValueGroupType *resultBuffer[MAX_NB_GROUPS];
 static uint8_t sampleNb[MAX_NB_GROUPS]={0};
-
-/* Array of pointers to hold the address of the result buffer given by the user for each group. */
-static Adc_ValueGroupType* DataBufferPtrAddr[MAX_NB_GROUPS];
-
-/* array to check whether the result buffer has been initialized for the corresponding group or not */
-static boolean Adc_resultBufferInit[MAX_NB_GROUPS];
 
 /* --------------------------- GLOBAL EXTERN VARIABLES --------------------------- */
 
@@ -29,197 +23,75 @@ static uint8_t getGroupId(AdcModule AdcModule, Sequencer Sequencer)
 	return 1;
 }
 
+
+void Adc_Handler(Adc_GroupType Group)
+{
+	AdcChannelGroup AdcChannelGroup = ArrayOfAdcChannelGroups[Group];
+	// taking the value of FIFOs in the result buffer
+	for(int i=0 ; i<AdcChannelGroup.NbChannels ; i++)
+		resultBuffer[Group][(i * AdcChannelGroup.nbSamples)+sampleNb[Group]] =
+		Memory(AdcChannelGroup.AdcModule, ADC_SS_BASE + 
+		ADC_SS_STEP *	AdcChannelGroup.Sequencer + ADC_SSFIFO);			
+	
+	if(AdcChannelGroup.Adc_GroupConvModeType==ADC_CONV_MODE_ONESHOT)
+	{
+		if(AdcChannelGroup.Adc_TriggerSourceType==ADC_TRIG_SRC_SW)
+			Adc_StopGroupConversion(Group); 
+		else if (AdcChannelGroup.Adc_TriggerSourceType==ADC_TRIG_SRC_HW)
+		{
+			Memory(AdcChannelGroup.AdcModule , ADC_EMUX) &= ~(1<<(AdcChannelGroup.Sequencer*4)) ; 
+			Memory(AdcChannelGroup.AdcModule , ADC_PSSI) &= ~(1<<(AdcChannelGroup.Sequencer)) ; 
+		}
+	}
+	if(AdcChannelGroup.Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
+		sampleNb[Group]=(sampleNb[Group]+1)%AdcChannelGroup.nbSamples;
+	
+	if(AdcChannelGroup.Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
+	{
+		sampleNb[Group]=sampleNb[Group]+1;
+		if(sampleNb[Group]==AdcChannelGroup.nbSamples)
+		{
+			Memory(AdcChannelGroup.AdcModule,ADC_ACTSS) &= ~(1<<AdcChannelGroup.Sequencer);
+			sampleNb[Group]=0;
+		}
+	}
+	Memory(AdcChannelGroup.AdcModule,ADC_ISC) = (1<<AdcChannelGroup.Sequencer);
+
+}
+
 void ADC0SS0_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC0,SS0);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels ; i++)
-			*(DataBufferPtrAddr[Adc_GroupType]+i) = ADC0_SSFIFO0_R;
-	
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_GroupConvModeType==ADC_CONV_MODE_ONESHOT)
-	{
-		if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_TriggerSourceType==ADC_TRIG_SRC_SW)
-		{
-			 //1.1. get which adc module is used for this group 
-			Adc_StopGroupConversion(Adc_GroupType); 
-		}
-		
-		else if (ArrayOfAdcChannelGroups[Adc_GroupType].Adc_TriggerSourceType==ADC_TRIG_SRC_HW)
-		{
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule , ADC_EMUX) &= ~ (1<<(ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer*4)) ; 
-			
-			//1.2. get which adc module is used for this group 
-			if(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule==ADC0)
-			{
-				//1.2.1. Deactivate current sequncer 
-				ADC0_PSSI_R &= ~ (1<< ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-			}
-			else
-			{
-					//1.2.2. Deactivate current sequncer 
-				ADC1_PSSI_R &= ~ (1<< ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer );
-			}
-		}
-	}
-	
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[0]=(sampleNb[0]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[0]=sampleNb[0]+1;
-		if(sampleNb[0]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-		{
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-			sampleNb[0]=0;
-		}
-	}
-	
-	ADC0_ISC_R = (1<<0);
+	Adc_Handler(getGroupId(ADC0,SS0));
 }
 
 void ADC0SS1_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC0,SS1);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			*(DataBufferPtrAddr[Adc_GroupType]+i) = ADC0_SSFIFO1_R;
-	
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_GroupConvModeType==ADC_CONV_MODE_ONESHOT)
-	{
-		if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_TriggerSourceType==ADC_TRIG_SRC_SW)
-		{
-			 //1.1. get which adc module is used for this group 
-			Adc_StopGroupConversion(Adc_GroupType); 
-		}
-		
-		else if (ArrayOfAdcChannelGroups[Adc_GroupType].Adc_TriggerSourceType==ADC_TRIG_SRC_HW)
-		{
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule , ADC_EMUX) &= ~ (1<<(ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer*4)) ; 
-			
-			//1.2. get which adc module is used for this group 
-			if(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule==ADC0)
-			{
-				//1.2.1. Deactivate current sequncer 
-				ADC0_PSSI_R &= ~ (1<< ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-			}
-			else
-			{
-					//1.2.2. Deactivate current sequncer 
-				ADC1_PSSI_R &= ~ (1<< ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer );
-			}
-		}
-	}
-	
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[1]=(sampleNb[1]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[1]=sampleNb[1]+1;
-		if(sampleNb[1]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-	}
-		
-	ADC0_ISC_R = (1<<1);
+	Adc_Handler(getGroupId(ADC0,SS1));
 }
-
 void ADC0SS2_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC0,SS2);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			adcResult[2][i][sampleNb[2]] = ADC0_SSFIFO2_R;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[2]=(sampleNb[2]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[2]=sampleNb[2]+1;
-		if(sampleNb[2]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-	}
-
-	ADC0_ISC_R = (1<<2);
+	Adc_Handler(getGroupId(ADC0,SS2));
 }
-
 void ADC0SS3_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC0,SS3);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			adcResult[3][i][sampleNb[3]] = ADC0_SSFIFO3_R;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[3]=(sampleNb[3]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[3]=sampleNb[3]+1;
-		if(sampleNb[3]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-	}
-
-	ADC0_ISC_R = (1<<3);
+	Adc_Handler(getGroupId(ADC0,SS3));
 }
-
 void ADC1SS0_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC1,SS0);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			adcResult[4][i][sampleNb[4]] = ADC1_SSFIFO0_R;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[4]=(sampleNb[4]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[4]=sampleNb[4]+1;
-		if(sampleNb[4]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-	}
-
-	ADC1_ISC_R = (1<<0);
-}
-
+	Adc_Handler(getGroupId(ADC1,SS0));
+}	
 void ADC1SS1_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC1,SS1);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			adcResult[5][i][sampleNb[5]] = ADC1_SSFIFO1_R;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[5]=(sampleNb[5]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[5]=sampleNb[5]+1;
-		if(sampleNb[5]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-	}
-	ADC1_ISC_R = (1<<1);
-}
-
+	Adc_Handler(getGroupId(ADC1,SS1));
+}	
 void ADC1SS2_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC1,SS2);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			adcResult[6][i][sampleNb[6]] = ADC1_SSFIFO2_R;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[6]=(sampleNb[6]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[6]=sampleNb[6]+1;
-		if(sampleNb[6]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-	}
-	ADC1_ISC_R = (1<<2);
-}
-
+	Adc_Handler(getGroupId(ADC1,SS2));
+}	
 void ADC1SS3_Handler()
 {
-	uint8_t Adc_GroupType = getGroupId(ADC1,SS3);
-	for(int i=0 ; i<ArrayOfAdcChannelGroups[Adc_GroupType].NbChannels; i++)
-			adcResult[7][i][sampleNb[7]] = ADC1_SSFIFO3_R;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[7]=(sampleNb[7]+1)%ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples;
-	if(ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
-	{
-		sampleNb[7]=sampleNb[7]+1;
-		if(sampleNb[7]==ArrayOfAdcChannelGroups[Adc_GroupType].nbSamples)
-			Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) &= ~(1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-	}
-	ADC1_ISC_R = (1<<3);
+	Adc_Handler(getGroupId(ADC1,SS3));
 }
-
 /* ----------------------------- APIs IMPLEMENTATION ----------------------------- */
 
 void Adc_init(AdcChannelGroup AdcChannelGroup)
@@ -272,19 +144,51 @@ void Adc_init(AdcChannelGroup AdcChannelGroup)
 
 }
 
-Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group, Adc_ValueGroupType* DataBufferPtr )
+
+
+#if (ADC_DEINIT_API==STD_ON)		
+void Adc_DeInit (void)
 {
-		/* taking the address of the result group buffer and save it in the DataBufferPtrAddr 
-		 * DataBufferPtrAddr is array of pointers contain the adresses of the all result group buffer 
-	 	 */
-	DataBufferPtrAddr[Group] = DataBufferPtr;
+	//Memory(AdcChannelGroup.AdcModule,ADC_SSPRI) |= (AdcChannelGroup.GroupPriority<<(AdcChannelGroup.Sequencer*4));	
+	Memory(ADC0,ADC_EMUX) &= ~0xffffffff;
+	Memory(ADC1,ADC_EMUX) &= ~0xffffffff;
+	Memory(ADC0,ADC_SSCTL) &= ~0xffffffff;
+	Memory(ADC1,ADC_SSCTL) &= ~0xffffffff;
+	Memory(ADC0,ADC_IM) &= ~0xf;	
+	Memory(ADC1,ADC_IM) &= ~0xf;	
+	
+	Memory(ADC0,ADC_ACTSS) &= ~0xF;
+	Memory(ADC1,ADC_ACTSS) &= ~0xF;
+	
+	INT_DISABLE_ADC0;
+	INT_DISABLE_ADC1;
+	SYSCTL_RCGCADC_R&= ~0x3;
+}
+
+
+#endif
+
+
+Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group,volatile  Adc_ValueGroupType* DataBufferPtr )
+{
+/* taking the address of the result group buffer and save it in the DataBufferPtrAddr 
+ DataBufferPtrAddr is array of pointers contain the adresses of the all result group buffer */
+	resultBuffer[Group] = DataBufferPtr ;
 						
 	/* Result buffer has been setup successfully for the required group */
-	Adc_resultBufferInit[Group]=TRUE;
+//	Adc_resultBufferInit[Group]=TRUE;
 	
 	return E_OK ; 
 }
 
+#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)
+Std_ReturnType Adc_ReadGroup ( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr )
+{
+	for(int i=0 ; i<ArrayOfAdcChannelGroups[Group].NbChannels ; i++)
+		DataBufferPtr[i] = resultBuffer[Group][(i * ArrayOfAdcChannelGroups[Group].nbSamples)+sampleNb[Group]];
+	return E_OK ; 
+}
+#endif
 
 void Adc_StartGroupConversion ( Adc_GroupType Adc_GroupType )
 {
@@ -317,10 +221,37 @@ void Adc_StartGroupConversion ( Adc_GroupType Adc_GroupType )
 	ArrayOfAdcChannelGroups[Adc_GroupType].Adc_StatusType = ADC_BUSY;
 }
 
+void Adc_StopGroupConversion( Adc_GroupType Group )
+{
+	uint8_t Current_Sequencer = ArrayOfAdcChannelGroups[Group].Sequencer ; 
+	// 1. check if the trigger source is SW Trigger 
+	if(ArrayOfAdcChannelGroups[Group].Adc_TriggerSourceType==ADC_TRIG_SRC_SW)
+	{
+		 //1.1. get which adc module is used for this group 
+		if(ArrayOfAdcChannelGroups[Group].AdcModule==ADC0)
+		{
+			//1.1.1. Deactivate current sequncer 
+			ADC0_PSSI_R &= ~ (1<< Current_Sequencer);
+		}
+		else
+		{
+				//1.1.2. Deactivate current sequncer 
+			uint8_t Current_Sequencer = ArrayOfAdcChannelGroups[Group].Sequencer ; 
+			ADC1_PSSI_R &= ~ (1<< Current_Sequencer);
+		}
+	}
+	
+	else if (ArrayOfAdcChannelGroups[Group].Adc_TriggerSourceType==ADC_TRIG_SRC_HW)
+	{
+		//error handling
+	}
+}
 Adc_StatusType Adc_GetGroupStatus ( Adc_GroupType Group )
 {
 	return ArrayOfAdcChannelGroups[Group].Adc_StatusType;	
 }
+
+
 
 #if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
 //to enable interrupts for a specific group
@@ -347,39 +278,45 @@ void Adc_DisableGroupNotification(Adc_GroupType Adc_GroupType)
 }
 #endif
 
-Adc_StreamNumSampleType Adc_GetStreamLastPointer ( Adc_GroupType Adc_GroupType, volatile Adc_ValueGroupType** PtrToSamplePtr )
+
+#if (ADC_HW_TRIGGER_API == STD_ON)
+void Adc_EnableHardwareTrigger ( Adc_GroupType Group )
 {
-		if(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule==ADC0) 
-			PtrToSamplePtr= (volatile Adc_ValueGroupType**)adcResult[ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer];
-		else if(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule==ADC1) 
-			PtrToSamplePtr= (volatile Adc_ValueGroupType**)adcResult[4+ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer];
-
-	return **PtrToSamplePtr;//getGroupId(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
-}
-
-void Adc_StopGroupConversion( Adc_GroupType Group )
-{
-	uint8_t Current_Sequencer = ArrayOfAdcChannelGroups[Group].Sequencer ; 
-	// 1. check if the trigger source is SW Trigger 
-	if(ArrayOfAdcChannelGroups[Group].Adc_TriggerSourceType==ADC_TRIG_SRC_SW)
-	{
-		 //1.1. get which adc module is used for this group 
-		if(ArrayOfAdcChannelGroups[Group].AdcModule==ADC0)
-		{
-			//1.1.1. Deactivate current sequncer 
-
-			ADC0_PSSI_R &= ~ (1<< Current_Sequencer);
-		}
-		else
-		{
-				//1.1.2. Deactivate current sequncer 
-			uint8_t Current_Sequencer = ArrayOfAdcChannelGroups[Group].Sequencer ; 
-			ADC1_PSSI_R &= ~ (1<< Current_Sequencer);
-		}
-	}
+	Memory(ArrayOfAdcChannelGroups[Group].AdcModule,ADC_IM) |= (1<<ArrayOfAdcChannelGroups[Group].Sequencer);	
 	
-	else if (ArrayOfAdcChannelGroups[Group].Adc_TriggerSourceType==ADC_TRIG_SRC_HW)
+	if(ArrayOfAdcChannelGroups[Group].Adc_HwTriggerSourceType==ADC_TRIG_TIMER)
 	{
-		//error handling
+		TIMER_initAdc(100);
+	}
+	else if (ArrayOfAdcChannelGroups[Group].Adc_HwTriggerSourceType==ADC_TRIG_EXTERNAL)
+	{
+		GPIO_initPin(PORTF,PIN4,DIGITAL,INPUT);	
+		GPIO_initInterruptAdc(PORTF,PIN4,FALLING);
 	}
 }
+
+void Adc_DisableHardwareTrigger ( Adc_GroupType Group )
+{
+	Memory(ArrayOfAdcChannelGroups[Group].AdcModule,ADC_IM) &= ~(1<<ArrayOfAdcChannelGroups[Group].Sequencer);	
+
+	if(ArrayOfAdcChannelGroups[Group].Adc_HwTriggerSourceType==ADC_TRIG_TIMER)
+	{
+		SYSCTL_RCGCTIMER_R &= ~0x01;
+	}
+	else if (ArrayOfAdcChannelGroups[Group].Adc_HwTriggerSourceType==ADC_TRIG_EXTERNAL)
+	{
+		GPIO_initPin(PORTF,PIN4,DIGITAL,INPUT);	
+		GPIO_initInterruptAdc(PORTF,PIN4,FALLING);
+	}
+}
+#endif
+#if (ADC_GET_STREAM_API==STD_ON)
+Adc_StreamNumSampleType Adc_GetStreamLastPointer ( Adc_GroupType Group, volatile Adc_ValueGroupType** PtrToSamplePtr )
+{
+	volatile Adc_ValueGroupType *appBuffer; 
+	if(Adc_ReadGroup(Group,appBuffer)!=E_OK){}
+	  PtrToSamplePtr = &appBuffer;
+	return sampleNb[Group];
+}
+#endif
+

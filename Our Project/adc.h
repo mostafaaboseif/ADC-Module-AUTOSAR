@@ -4,6 +4,8 @@
 #include "gpio.h"
 #include "Adc_PCCfg.h"
 #include "Std_Types.h"
+#include "uart.h"
+#include "timer.h"
 
 /* ---------------------------------- CONSTANTS ---------------------------------- */
 
@@ -34,11 +36,6 @@ ADC_BUSY,
 ADC_COMPLETED,
 ADC_STREAM_COMPLETED
 }Adc_StatusType;
-
-typedef enum Adc_GroupConvModeType{  //Sherif Tasnim Thomas
-ADC_CONV_MODE_ONESHOT=0,
-ADC_CONV_MODE_CONTINUOUS=0xF
-}Adc_GroupConvModeType;
 
 //Implementation Specific
 typedef enum ADCRegOffset{
@@ -95,6 +92,16 @@ ADC_CC          =   0xFC8
 
 
 
+typedef enum SeqOffset{
+ADC_SS_BASE   = ADC_SSMUX0,
+ADC_SS_STEP   = ADC_SSMUX1 - ADC_SSMUX0,
+ADC_SSMUX     = ADC_SSMUX0 - ADC_SSMUX0,
+ADC_SSCTL     = ADC_SSCTL0 - ADC_SSMUX0,
+ADC_SSFIFO    = ADC_SSFIFO0 - ADC_SSMUX0,
+ADC_SSFSTAT  	= ADC_SSFSTAT0 - ADC_SSMUX0
+}SeqOffset;
+
+
 typedef enum AdcChannel{
 PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5 
 }AdcChannel;
@@ -111,16 +118,21 @@ typedef enum AdcModule{
 
 
 //AUTOSAR Requirements
-typedef enum Adc_GroupAccessModeType{  //Amgad Marwan Osama
+typedef enum Adc_GroupAccessModeType{  
 ADC_ACCESS_MODE_SINGLE,
 ADC_ACCESS_MODE_STREAMING
 }Adc_GroupAccessModeType;
 
 
-typedef enum Adc_StreamBufferModeType{ //Gemy
+typedef enum Adc_StreamBufferModeType{ 
 ADC_STREAM_BUFFER_LINEAR,
 ADC_STREAM_BUFFER_CIRCULAR
 }Adc_StreamBufferModeType;
+
+typedef enum Adc_GroupConvModeType{  
+ADC_CONV_MODE_ONESHOT=0,
+ADC_CONV_MODE_CONTINUOUS=0xF
+}Adc_GroupConvModeType;
 
 typedef enum Adc_TriggerSourceType{
 ADC_TRIG_SRC_SW, 
@@ -140,15 +152,6 @@ ADC_TRIG_PWM3,
 ADC_TRIG_ALWAYS =0xF,
 NO_HW_TRIG
 }Adc_HwTriggerSourceType;
-
-typedef enum SeqOffset{
-ADC_SS_BASE   = ADC_SSMUX0,
-ADC_SS_STEP   = ADC_SSMUX1 - ADC_SSMUX0,
-ADC_SSMUX     = ADC_SSMUX0 - ADC_SSMUX0,
-ADC_SSCTL     = ADC_SSCTL0 - ADC_SSMUX0,
-ADC_SSFIFO    = ADC_SSFIFO0 - ADC_SSMUX0,
-ADC_SSFSTAT  	= ADC_SSFSTAT0 - ADC_SSMUX0
-}SeqOffset;
 
 typedef enum Adc_HwTriggerSignalType{
 ADC_HW_TRIG_RISING_EDGE, 
@@ -198,6 +201,9 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 #define INT_ENABLE_ADC0(X)    *NVIC_EN0 |= (1<<(14+X));
 #define INT_ENABLE_ADC1(X)    *NVIC_EN1 |= (1<<(16+X));
+#define INT_DISABLE_ADC0 			*NVIC_EN0 &= ~(0xF<<14);
+#define INT_DISABLE_ADC1	    *NVIC_EN1 &= ~(0xF<<16);
+
 
 /* ---------------------------------- FUNCTION DECLARATIONS ---------------------------------- */
 
@@ -207,21 +213,31 @@ void Adc_init(AdcChannelGroup);
 void Adc_DeInit (void);
 #endif
 
-Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group, Adc_ValueGroupType* DataBufferPtr ); 
+Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr ); 
 
 #if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
-void Adc_StartGroupConversion ( Adc_GroupType Adc_GroupType );
-void Adc_StopGroupConversion ( Adc_GroupType Adc_GroupType );
+void Adc_StartGroupConversion ( Adc_GroupType groupId );
+void Adc_StopGroupConversion ( Adc_GroupType groupId );
 #endif
 
 #if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
-void Adc_EnableGroupNotification(Adc_GroupType Adc_GroupType);
-void Adc_DisableGroupNotification(Adc_GroupType Adc_GroupType);
+void Adc_EnableGroupNotification(Adc_GroupType groupId);
+void Adc_DisableGroupNotification(Adc_GroupType groupId);
 #endif
 
 #if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)
-void Adc_ReadGroup ( void );
+Std_ReturnType Adc_ReadGroup ( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr );
 #endif
 
-Adc_StreamNumSampleType Adc_GetStreamLastPointer ( Adc_GroupType Group, volatile Adc_ValueGroupType** PtrToSamplePtr );
+
 void Adc_StopGroupConversion( Adc_GroupType Group ); 
+
+
+#if (ADC_HW_TRIGGER_API == STD_ON)
+void Adc_EnableHardwareTrigger ( Adc_GroupType Group );
+void Adc_DisableHardwareTrigger ( Adc_GroupType Group );
+#endif
+
+#if(ADC_GET_STREAM_API==STD_ON)
+Adc_StreamNumSampleType Adc_GetStreamLastPointer ( Adc_GroupType Group, volatile Adc_ValueGroupType** PtrToSamplePtr );
+#endif

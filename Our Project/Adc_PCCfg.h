@@ -17,6 +17,12 @@
 /* used to enable or disable deinit api */
 #define ADC_DEINIT_API 							STD_OFF		
 
+/* Adds / removes the services Adc_EnableHardwareTrigger() and Adc_DisableHardwareTrigger() from the code. */ 
+#define ADC_HW_TRIGGER_API						STD_ON
+
+/* Adds / removes the services Adc_GetStreamLastPointer() from the code. */ 
+#define ADC_GET_STREAM_API						STD_OFF
+
 /* used to enable or disable Development error detection for Adc driver */
 #define ADC_DEV_ERROR_DETECT					STD_OFF
 
@@ -25,9 +31,6 @@
 
 /* Determines, if the queuing mechanism is active in case of priority mechanism disabled*/
 #define ADC_ENABLE_QUEUING						STD_OFF		
-
-/* Adds / removes the services Adc_EnableHardwareTrigger() and Adc_DisableHardwareTrigger() from the code. */ 
-#define ADC_HW_TRIGGER_API						STD_OFF
 
 /* Adds / removes all power state management related APIs */
 #define ADC_LOW_POWER_STATES_SUPPORT			STD_OFF
