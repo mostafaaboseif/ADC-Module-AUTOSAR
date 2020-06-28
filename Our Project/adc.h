@@ -103,7 +103,7 @@ ADC_SSFSTAT  	= ADC_SSFSTAT0 - ADC_SSMUX0
 
 
 typedef enum AdcChannel{
-PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5 
+PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5,PE4,PB4,PB5
 }AdcChannel;
 typedef enum Sequencer{
 	SS0,SS1,SS2,SS3
@@ -180,7 +180,7 @@ ADC_PRIORITY_HW_SW
 
 /* ---------------------------------- STRUCTS ---------------------------------- */
 
-typedef struct AdcChannelGroup{
+typedef struct Adc_ConfigType{
 Adc_GroupType Adc_GroupType;
 AdcModule AdcModule;
 Sequencer Sequencer;
@@ -195,7 +195,7 @@ Adc_StatusType Adc_StatusType;
 Adc_GroupPriorityType GroupPriority;
 Adc_ChannelType NbChannels;
 AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
-}AdcChannelGroup;
+}Adc_ConfigType;
 
 /*----------------------------------- FUNCTION-LIKE MACROS -----------------------------------*/
 
@@ -207,8 +207,9 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 /* ---------------------------------- FUNCTION DECLARATIONS ---------------------------------- */
 
-void Adc_init(AdcChannelGroup);
 
+void Adc_init(const Adc_ConfigType* ConfigPtr );
+	
 #if (ADC_DEINIT_API==STD_ON)		
 void Adc_DeInit (void);
 #endif
@@ -216,21 +217,18 @@ void Adc_DeInit (void);
 Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr ); 
 
 #if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
-void Adc_StartGroupConversion ( Adc_GroupType groupId );
-void Adc_StopGroupConversion ( Adc_GroupType groupId );
-#endif
-
-#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
-void Adc_EnableGroupNotification(Adc_GroupType groupId);
-void Adc_DisableGroupNotification(Adc_GroupType groupId);
+void Adc_StartGroupConversion ( Adc_GroupType Group );
+void Adc_StopGroupConversion ( Adc_GroupType Group );
 #endif
 
 #if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)
 Std_ReturnType Adc_ReadGroup ( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr );
 #endif
 
-
-void Adc_StopGroupConversion( Adc_GroupType Group ); 
+#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
+void Adc_EnableGroupNotification(Adc_GroupType Group);
+void Adc_DisableGroupNotification(Adc_GroupType Group);
+#endif
 
 
 #if (ADC_HW_TRIGGER_API == STD_ON)

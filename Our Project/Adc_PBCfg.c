@@ -1,7 +1,7 @@
 #include "adc.h"
 
 
-AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS] = {
+Adc_ConfigType ArrayOfAdcChannels[MAX_NB_GROUPS] = {
 {
 0,    //ID
 ADC0,
