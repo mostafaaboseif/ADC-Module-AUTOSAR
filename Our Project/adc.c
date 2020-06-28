@@ -279,6 +279,8 @@ void Adc_StartGroupConversion ( Adc_GroupType Adc_GroupType )
 		/* handle invalid  error*/
 	}
 }
+
+/*This function only called for SW Trigger*/
 void Adc_StopGroupConversion( Adc_GroupType Group )
 {
 	uint8_t Current_Sequencer = ArrayOfAdcChannelGroups[Group].Sequencer ; 
@@ -288,12 +290,12 @@ void Adc_StopGroupConversion( Adc_GroupType Group )
 		 //1.1. get which adc module is used for this group 
 		if(ArrayOfAdcChannelGroups[Group].AdcModule==ADC0)
 		{
-			//1.1.1. Deactivate current sequncer 
+			//1.1.1. Deactivate current sequncer of ADC0
 			ADC0_PSSI_R &= ~ (1<< Current_Sequencer);
 		}
 		else
 		{
-			//1.1.2. Deactivate current sequncer 
+			//1.1.2. Deactivate current sequncer of ADC1
 			uint8_t Current_Sequencer = ArrayOfAdcChannelGroups[Group].Sequencer ; 
 			ADC1_PSSI_R &= ~ (1<< Current_Sequencer);
 		}
