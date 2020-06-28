@@ -25,6 +25,7 @@ typedef uint8_t Adc_GroupPriorityType;
 typedef uint8_t Adc_StreamNumSampleType;
 
 /* ---------------------------------- ENUMS ---------------------------------- */
+
 typedef enum 
 {
 FALSE,TRUE
