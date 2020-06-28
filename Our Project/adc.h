@@ -206,17 +206,40 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 
 /* ---------------------------------- FUNCTION DECLARATIONS ---------------------------------- */
-
+// [SWS_Adc_00054] Adc_Init shall initialize the ADC hardware units and driver according to the configuration set referenced by ConfigPtr.
+// [SWS_Adc_00056] The function Adc_Init shall only initialize the configured resources.
+// [SWS_Adc_00246] If the hardware allows for only one usage of the register, the driver module implementing that functionality is responsible for initializing the register.⌋ (SRS_SPAL_12461)
+// [SWS_Adc_00249] One-time writable registers that require initialization directly after reset shall be initialized by the startup code.⌋ (SRS_SPAL_12461)
+// [SWS_Adc_00250] All other registers shall be initialized by the startup code.⌋ (SRS_SPAL_12461)
+// [SWS_Adc_00077] The function Adc_Init shall disable the notifications and hardware trigger capability (if statically configured as active).⌋ (SRS_Adc_12318)
+// [SWS_Adc_00307] The function Adc_Init shall set all groups to ADC_IDLE state.
 void Adc_init(AdcChannelGroup);
 
+
+//[SWS_Adc_00110] ⌈The function Adc_DeInit shall return all ADC HW Units to a state comparable to their power on reset state. Values of registers which are not writeable are excluded. It’s the responsibility of the hardware design that this state does not lead to undefined activities in the μC.⌋ (SRS_SPAL_12163)
+//[SWS_Adc_00111] ⌈The function Adc_DeInit shall disable all used interrupts and notifications.⌋ (SRS_BSW_00336, SRS_SPAL_12163)
+//[SWS_Adc_00358] ⌈The ADC module’s environment shall not call the function Adc_DeInit while any group is not in state ADC_IDLE. ()
+//[SWS_Adc_00228] ⌈The function Adc_DeInit shall be pre compile time configurable On/Off by the configuration parameter: AdcDeInitApi.(SRS_BSW_00171)
 #if (ADC_DEINIT_API==STD_ON)		
 void Adc_DeInit (void);
 #endif
 
+//[SWS_Adc_00420] The function Adc_SetupResultBuffer shall initialize the result buffer pointer of the selected group with the address value passed as parameter.⌋ 
 Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr ); 
 
-#if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
+#if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)
+//[SWS_Adc_00061] ⌈The function Adc_StartGroupConversion shall start the conversion of all channels of the requested ADC Channel group. Depending on the group configuration, one-shot or continuous conversion is started.⌋ (SRS_Adc_12364)
+//[SWS_Adc_00431]⌈The function Adc_StartGroupConversion shall reset the internal result buffer pointer, that conversion result storage always starts, after calling Adc_StartGroupConversion, at the result buffer base address which was configured with Adc_SetupResultBuffer.⌋ ()
+//[SWS_Adc_00156] ⌈The function Adc_StartGroupConversion shall NOT automatically enable the notification mechanism for that group (this has to be done by a separate API call).⌋ (SRS_Adc_12317, SRS_Adc_12318)
+//[SWS_Adc_00146] ⌈The ADC module’s environment shall only call Adc_StartGroupConversion for groups configured with software trigger source.⌋ (SRS_Adc_12817, SRS_Adc_12364)
+//[SWS_Adc_00259]⌈The function Adc_StartGroupConversion shall be pre-compile time configurable On/Off by the configuration parameter AdcEnableStartStopGroupApi.⌋ (SRS_BSW_00171)	
 void Adc_StartGroupConversion ( Adc_GroupType groupId );
+
+
+
+//[SWS_Adc_00385] ⌈When the ADC Channel Group is in one-shot and software-trigger mode, the function Adc_StopGroupConversion shall stop an ongoing conversion of the group.⌋ (SRS_Adc_12364)
+//[SWS_Adc_00437] ⌈When the ADC Channel Group is in one-shot and software-trigger mode, the function Adc_StopGroupConversion shall remove a start/restart request of the group from the queue, if queuing is enabled and a start/restart request is stored in the queue.⌋ ()
+//[SWS_Adc_00386] ⌈When the ADC Channel Group is in continuous-conversion and software-trigger mode, the function Adc_StopGroupConversion shall stop an ongoing conversion of the group.⌋ (SRS_Adc_12364)
 void Adc_StopGroupConversion ( Adc_GroupType groupId );
 #endif
 
@@ -226,18 +249,28 @@ void Adc_DisableGroupNotification(Adc_GroupType groupId);
 #endif
 
 #if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)
+//[SWS_Adc_00075]⌈The function Adc_ReadGroup shall read the latest available conversion results of the requested group.⌋ ()
+//[SWS_Adc_00113]⌈The function Adc_ReadGroup shall read the raw converted values without further scaling. The read values shall be aligned according the configuration parameter setting of ADC_RESULT_ALIGNMENT.⌋ (SRS_SPAL_12063, SRS_Adc_12819, SRS_Adc_12292, SRS_Adc_12824)
+//[SWS_Adc_00122]⌈If applicable, the function Adc_ReadGroup shall mask out all information or diagnostic bits provided by the conversion but not belonging to the conversion results themselves.⌋ (SRS_Adc_12283, SRS_Adc_12819)
 Std_ReturnType Adc_ReadGroup ( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr );
 #endif
 
-
-void Adc_StopGroupConversion( Adc_GroupType Group ); 
-
-
 #if (ADC_HW_TRIGGER_API == STD_ON)
+//[SWS_Adc_00144] ⌈A group with trigger source hardware, whose trigger was enabled with Adc_EnableHardwareTrigger, shall execute the group channel conversions, whenever a trigger event occurs.⌋ (SRS_Adc_12823)
+//[SWS_Adc_00432] ⌈The function Adc_EnableHardwareTrigger shall reset the internal group result buffer pointer, that conversion result storage always starts, after calling Adc_EnableHardwareTrigger, at the result buffer base address which was configured with Adc_SetupResultBuffer.⌋ ()
+//[SWS_Adc_00273] ⌈The ADC module’s environment shall guarantee that no concurrent conversions take place on the same HW Unit (happening of different hardware triggers at the same time).⌋ (SRS_Adc_12823)
 void Adc_EnableHardwareTrigger ( Adc_GroupType Group );
+
+//[SWS_Adc_00116] ⌈The function Adc_DisableHardwareTrigger shall disable the hardware trigger for the requested ADC Channel group.⌋ (SRS_Adc_12823)
+//[SWS_Adc_00429] ⌈The function Adc_DisableHardwareTrigger shall remove any queued start/restart request for the requested ADC Channel group if queuing is enabled.⌋ ()
+//[SWS_Adc_00145] ⌈The function Adc_DisableHardwareTrigger shall abort an ongoing conversion, if applicable (supported by the hardware).⌋ (SRS_Adc_12364)
+//[SWS_Adc_00157] ⌈If enabled, the function Adc_DisableHardwareTrigger shall disable the notification mechanism for the requested group.⌋ (SRS_Adc_12317, SRS_Adc_12318, SRS_Adc_12364)
 void Adc_DisableHardwareTrigger ( Adc_GroupType Group );
 #endif
 
 #if(ADC_GET_STREAM_API==STD_ON)
+//[SWS_Adc_00214] ⌈The function Adc_GetStreamLastPointer shall set the pointer, passed as parameter (PtrToSamplePtr) to point in the ADC result buffer to the latest result of the first group channel of the last completed conversion round.⌋ (SRS_Adc_12292, SRS_Adc_12802)
+//[SWS_Adc_00418]⌈All values which the ADC driver stores in the ADC result buffer, are left without further scaling and shall be aligned according the configuration parameter setting of ADC_RESULT_ALIGNMENT.⌋ ()
+//[SWS_Adc_00387]⌈The function Adc_GetStreamLastPointer shall return the number of valid samples per channel, stored in the ADC result buffer.⌋ ()
 Adc_StreamNumSampleType Adc_GetStreamLastPointer ( Adc_GroupType Group, volatile Adc_ValueGroupType** PtrToSamplePtr );
 #endif
