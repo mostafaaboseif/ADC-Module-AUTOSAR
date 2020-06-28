@@ -1,7 +1,7 @@
 #include "adc.h"
 
 
-Adc_ConfigType ArrayOfAdcChannels[MAX_NB_GROUPS] = {
+AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS] = {
 {
 0,    //ID
 ADC0,
@@ -26,7 +26,7 @@ SS1,
 ADC_TRIG_SRC_SW, 
 NO_HW_TRIG,
 ADC_HW_TRIG_RISING_EDGE, 
-ADC_CONV_MODE_CONTINUOUS,
+ADC_CONV_MODE_ONESHOT,
 ADC_ACCESS_MODE_SINGLE,
 2,
 ADC_STREAM_BUFFER_CIRCULAR,

@@ -30,12 +30,6 @@ typedef enum
 FALSE,TRUE
 }boolean; 
 //In Progress
-typedef enum Adc_StatusType{
-ADC_IDLE,
-ADC_BUSY,
-ADC_COMPLETED,
-ADC_STREAM_COMPLETED
-}Adc_StatusType;
 
 //Implementation Specific
 typedef enum ADCRegOffset{
@@ -103,7 +97,7 @@ ADC_SSFSTAT  	= ADC_SSFSTAT0 - ADC_SSMUX0
 
 
 typedef enum AdcChannel{
-PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5,PE4,PB4,PB5
+PE3,PE2,PE1,PE0,PD3,PD2,PD1,PD0,PE5 
 }AdcChannel;
 typedef enum Sequencer{
 	SS0,SS1,SS2,SS3
@@ -118,6 +112,13 @@ typedef enum AdcModule{
 
 
 //AUTOSAR Requirements
+typedef enum Adc_StatusType{
+	ADC_IDLE,
+	ADC_BUSY,
+	ADC_COMPLETED,
+	ADC_STREAM_COMPLETED
+}Adc_StatusType;
+
 typedef enum Adc_GroupAccessModeType{  
 ADC_ACCESS_MODE_SINGLE,
 ADC_ACCESS_MODE_STREAMING
@@ -180,7 +181,7 @@ ADC_PRIORITY_HW_SW
 
 /* ---------------------------------- STRUCTS ---------------------------------- */
 
-typedef struct Adc_ConfigType{
+typedef struct AdcChannelGroup{
 Adc_GroupType Adc_GroupType;
 AdcModule AdcModule;
 Sequencer Sequencer;
@@ -195,7 +196,7 @@ Adc_StatusType Adc_StatusType;
 Adc_GroupPriorityType GroupPriority;
 Adc_ChannelType NbChannels;
 AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
-}Adc_ConfigType;
+}AdcChannelGroup;
 
 /*----------------------------------- FUNCTION-LIKE MACROS -----------------------------------*/
 
@@ -207,9 +208,8 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 /* ---------------------------------- FUNCTION DECLARATIONS ---------------------------------- */
 
+void Adc_init(AdcChannelGroup);
 
-void Adc_init(const Adc_ConfigType* ConfigPtr );
-	
 #if (ADC_DEINIT_API==STD_ON)		
 void Adc_DeInit (void);
 #endif
@@ -217,18 +217,21 @@ void Adc_DeInit (void);
 Std_ReturnType Adc_SetupResultBuffer( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr ); 
 
 #if (ADC_ENABLE_START_STOP_GROUP_API==STD_ON)		
-void Adc_StartGroupConversion ( Adc_GroupType Group );
-void Adc_StopGroupConversion ( Adc_GroupType Group );
+void Adc_StartGroupConversion ( Adc_GroupType groupId );
+void Adc_StopGroupConversion ( Adc_GroupType groupId );
+#endif
+
+#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
+void Adc_EnableGroupNotification(Adc_GroupType groupId);
+void Adc_DisableGroupNotification(Adc_GroupType groupId);
 #endif
 
 #if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)
 Std_ReturnType Adc_ReadGroup ( Adc_GroupType Group, volatile Adc_ValueGroupType* DataBufferPtr );
 #endif
 
-#if (ADC_GRP_NOTIF_CAPABILITY==STD_ON)		
-void Adc_EnableGroupNotification(Adc_GroupType Group);
-void Adc_DisableGroupNotification(Adc_GroupType Group);
-#endif
+
+void Adc_StopGroupConversion( Adc_GroupType Group ); 
 
 
 #if (ADC_HW_TRIGGER_API == STD_ON)
