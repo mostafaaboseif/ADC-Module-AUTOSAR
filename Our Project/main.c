@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-extern AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
+extern Adc_ConfigType ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
 
 extern volatile Adc_ValueGroupType adcResult[MAX_NB_GROUPS][MAX_NB_CHANNELS][MAX_NB_OF_SAMPLES_PER_CHANNEL];
 
@@ -21,8 +21,8 @@ int main()
 	GPIO_initPin(PORTE,PIN1,ANALOG,PERIPHERAL);
 	GPIO_initPin(PORTE,PIN3,ANALOG,PERIPHERAL);
 		
-	Adc_init(ArrayOfAdcChannelGroups[0]);
-	Adc_init(ArrayOfAdcChannelGroups[1]);
+	Adc_init(&ArrayOfAdcChannelGroups[0]);
+	Adc_init(&ArrayOfAdcChannelGroups[1]);
 	
 	UART_init(UART1,UART_BAUD_9600);
 	

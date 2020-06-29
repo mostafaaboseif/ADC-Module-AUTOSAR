@@ -5,7 +5,7 @@ I (gpio.h)(0x5EF393F4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (tm4c123gh6pm.h)(0x53886E7A)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5D9B2672)
-F (.\main.c)(0x5EF78D22)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\main.c)(0x5EFA30BC)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (tm4c123gh6pm.h)(0x53886E7A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (gpio.h)(0x5EF393F4)
@@ -15,7 +15,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9B2678)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9B267A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9B267A)
 I (timer.h)(0x5EF0ACAC)
-I (adc.h)(0x5EF78BA9)
+I (adc.h)(0x5EFA30AB)
 I (Adc_PCCfg.h)(0x5EF6D284)
 I (Std_Types.h)(0x5EF59307)
 F (.\uart.c)(0x5EF58B7A)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
@@ -33,8 +33,8 @@ I (tm4c123gh6pm.h)(0x53886E7A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (gpio.h)(0x5EF393F4)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5D9B2672)
-F (.\adc.c)(0x5EF78C53)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
-I (adc.h)(0x5EF78BA9)
+F (.\adc.c)(0x5EFA30A7)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
+I (adc.h)(0x5EFA30AB)
 I (gpio.h)(0x5EF393F4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (tm4c123gh6pm.h)(0x53886E7A)
@@ -46,8 +46,8 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9B2678)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9B267A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9B267A)
 I (timer.h)(0x5EF0ACAC)
-F (.\Adc_PBCfg.c)(0x5EF7898E)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\adc_pbcfg.o --omf_browse .\objects\adc_pbcfg.crf --depend .\objects\adc_pbcfg.d)
-I (adc.h)(0x5EF78BA9)
+F (.\Adc_PBCfg.c)(0x5EFA30AB)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Users\mosta\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\mosta\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="529" -D_RTE_ -DTM4C123GH6PM-o .\objects\adc_pbcfg.o --omf_browse .\objects\adc_pbcfg.crf --depend .\objects\adc_pbcfg.d)
+I (adc.h)(0x5EFA30AB)
 I (gpio.h)(0x5EF393F4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (tm4c123gh6pm.h)(0x53886E7A)

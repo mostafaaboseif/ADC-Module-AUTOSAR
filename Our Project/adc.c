@@ -9,7 +9,7 @@ static uint8_t sampleNb[MAX_NB_GROUPS]={0};
 
 /* --------------------------- GLOBAL EXTERN VARIABLES --------------------------- */
 
-extern AdcChannelGroup ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
+extern Adc_ConfigType ArrayOfAdcChannelGroups[MAX_NB_GROUPS];
 
 /*------------------------ LOCAL FUNCTIONS IMPLEMENTATION -------------------------*/
 
@@ -22,48 +22,48 @@ static uint8_t getGroupId(AdcModule AdcModule, Sequencer Sequencer)
 }
 void Adc_Handler(Adc_GroupType Group)
 {
-	AdcChannelGroup* AdcChannelGroup = &ArrayOfAdcChannelGroups[Group];
+	Adc_ConfigType* Adc_ConfigType = &ArrayOfAdcChannelGroups[Group];
 	// taking the value of FIFOs in the result buffer
-	for(int i=0 ; i<AdcChannelGroup->NbChannels ; i++)
-		resultBuffer[Group][(i * AdcChannelGroup->nbSamples)+sampleNb[Group]] =
-		Memory(AdcChannelGroup->AdcModule, ADC_SS_BASE + ADC_SS_STEP *	AdcChannelGroup->Sequencer + ADC_SSFIFO);			
+	for(int i=0 ; i<Adc_ConfigType->NbChannels ; i++)
+		resultBuffer[Group][(i * Adc_ConfigType->nbSamples)+sampleNb[Group]] =
+		Memory(Adc_ConfigType->AdcModule, ADC_SS_BASE + ADC_SS_STEP *	Adc_ConfigType->Sequencer + ADC_SSFIFO);			
 	
-	if(AdcChannelGroup->Adc_GroupConvModeType==ADC_CONV_MODE_ONESHOT)
+	if(Adc_ConfigType->Adc_GroupConvModeType==ADC_CONV_MODE_ONESHOT)
 	{
-		if(AdcChannelGroup->Adc_TriggerSourceType==ADC_TRIG_SRC_SW)
+		if(Adc_ConfigType->Adc_TriggerSourceType==ADC_TRIG_SRC_SW)
 			Adc_StopGroupConversion(Group); 
-		else if (AdcChannelGroup->Adc_TriggerSourceType==ADC_TRIG_SRC_HW)
+		else if (Adc_ConfigType->Adc_TriggerSourceType==ADC_TRIG_SRC_HW)
 		{
-			Memory(AdcChannelGroup->AdcModule , ADC_EMUX) &= ~(1<<(AdcChannelGroup->Sequencer*4)) ; 
-			Memory(AdcChannelGroup->AdcModule , ADC_PSSI) &= ~(1<<(AdcChannelGroup->Sequencer)) ; 
+			Memory(Adc_ConfigType->AdcModule , ADC_EMUX) &= ~(1<<(Adc_ConfigType->Sequencer*4)) ; 
+			Memory(Adc_ConfigType->AdcModule , ADC_PSSI) &= ~(1<<(Adc_ConfigType->Sequencer)) ; 
 		}
 	}
-	if(AdcChannelGroup->Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
-		sampleNb[Group]=(sampleNb[Group]+1)%AdcChannelGroup->nbSamples;
+	if(Adc_ConfigType->Adc_StreamBufferModeType==ADC_STREAM_BUFFER_CIRCULAR)
+		sampleNb[Group]=(sampleNb[Group]+1)%Adc_ConfigType->nbSamples;
 	
-	if(AdcChannelGroup->Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
+	if(Adc_ConfigType->Adc_StreamBufferModeType==ADC_STREAM_BUFFER_LINEAR)
 	{
 		sampleNb[Group]=sampleNb[Group]+1;
-		if(sampleNb[Group]==AdcChannelGroup->nbSamples)
+		if(sampleNb[Group]==Adc_ConfigType->nbSamples)
 		{
-			Memory(AdcChannelGroup->AdcModule,ADC_ACTSS) &= ~(1<<AdcChannelGroup->Sequencer);
+			Memory(Adc_ConfigType->AdcModule,ADC_ACTSS) &= ~(1<<Adc_ConfigType->Sequencer);
 			sampleNb[Group]=0;
 		}
 	}
-	Memory(AdcChannelGroup->AdcModule,ADC_ISC) = (1<<AdcChannelGroup->Sequencer);
+	Memory(Adc_ConfigType->AdcModule,ADC_ISC) = (1<<Adc_ConfigType->Sequencer);
 	
 	//Setting The ADC Channel Group Status
-	if( AdcChannelGroup->Adc_GroupConvModeType   == ADC_CONV_MODE_CONTINUOUS)
+	if( Adc_ConfigType->Adc_GroupConvModeType   == ADC_CONV_MODE_CONTINUOUS)
 	{
 	//[SWS_Adc_00325] ADC_STREAM_COMPLETED:
 	//If it is called in single access mode after one conversion round is completed.
 	//If it is called in streaming access mode after the number of conversion rounds of the requested group have been finished.
-		if( ( AdcChannelGroup->Adc_GroupConvModeType   == ADC_ACCESS_MODE_STREAMING && sampleNb[Group]==AdcChannelGroup->nbSamples ) 
-				 || AdcChannelGroup->Adc_GroupAccessModeType == ADC_ACCESS_MODE_SINGLE )
-						AdcChannelGroup->Adc_StatusType = ADC_STREAM_COMPLETED;
+		if( ( Adc_ConfigType->Adc_GroupConvModeType   == ADC_ACCESS_MODE_STREAMING && sampleNb[Group]==Adc_ConfigType->nbSamples ) 
+				 || Adc_ConfigType->Adc_GroupAccessModeType == ADC_ACCESS_MODE_SINGLE )
+						Adc_ConfigType->Adc_StatusType = ADC_STREAM_COMPLETED;
 	//[SWS_Adc_00224] ADC_COMPLETED: If it is called after a conversion round (not the final one)
 		else
-			AdcChannelGroup->Adc_StatusType = ADC_COMPLETED;
+			Adc_ConfigType->Adc_StatusType = ADC_COMPLETED;
 	}
 }
 void ADC0SS0_Handler()
@@ -101,60 +101,60 @@ void ADC1SS3_Handler()
 
 /* ----------------------------- APIs IMPLEMENTATION ----------------------------- */
 
-void Adc_init(AdcChannelGroup AdcChannelGroup)
+void Adc_init(Adc_ConfigType *Adc_ConfigType)
 {
-	if(AdcChannelGroup.AdcModule==ADC0)
+	if(Adc_ConfigType->AdcModule==ADC0)
 	{	
 		SYSCTL_RCGCADC_R |= 0x1;
 		while(!(SYSCTL_PRADC_R |= 0x1));
-		INT_ENABLE_ADC0(AdcChannelGroup.Sequencer);
+		INT_ENABLE_ADC0(Adc_ConfigType->Sequencer);
 	}
-	else if(AdcChannelGroup.AdcModule==ADC1)
+	else if(Adc_ConfigType->AdcModule==ADC1)
 	{	
 		SYSCTL_RCGCADC_R |= 0x2;
 		while(!(SYSCTL_PRADC_R |= 0x2));
-		INT_ENABLE_ADC1(AdcChannelGroup.Sequencer);
+		INT_ENABLE_ADC1(Adc_ConfigType->Sequencer);
 	}
 	//Disable sequencer
-	Memory(AdcChannelGroup.AdcModule,ADC_ACTSS) &= ~(1<<AdcChannelGroup.Sequencer);
+	Memory(Adc_ConfigType->AdcModule,ADC_ACTSS) &= ~(1<<Adc_ConfigType->Sequencer);
 	//Enable interrupts
-	Memory(AdcChannelGroup.AdcModule,ADC_IM) |= (1<<AdcChannelGroup.Sequencer);	
+	Memory(Adc_ConfigType->AdcModule,ADC_IM) |= (1<<Adc_ConfigType->Sequencer);	
 	//Select trigger source
-	if(AdcChannelGroup.Adc_TriggerSourceType == ADC_TRIG_SRC_SW)
-		Memory(AdcChannelGroup.AdcModule,ADC_EMUX) |= (0<<(AdcChannelGroup.Sequencer*4)); 
-	else if(AdcChannelGroup.Adc_TriggerSourceType == ADC_TRIG_SRC_HW)
-		Memory(AdcChannelGroup.AdcModule,ADC_EMUX) |= (AdcChannelGroup.Adc_HwTriggerSourceType<<(AdcChannelGroup.Sequencer*4)) ;
+	if(Adc_ConfigType->Adc_TriggerSourceType == ADC_TRIG_SRC_SW)
+		Memory(Adc_ConfigType->AdcModule,ADC_EMUX) |= (0<<(Adc_ConfigType->Sequencer*4)); 
+	else if(Adc_ConfigType->Adc_TriggerSourceType == ADC_TRIG_SRC_HW)
+		Memory(Adc_ConfigType->AdcModule,ADC_EMUX) |= (Adc_ConfigType->Adc_HwTriggerSourceType<<(Adc_ConfigType->Sequencer*4)) ;
 	//Assign analog input pins
-	for(int i=0;i<AdcChannelGroup.NbChannels;i++)
+	for(int i=0;i<Adc_ConfigType->NbChannels;i++)
 	{
-		Memory(AdcChannelGroup.AdcModule, ADC_SS_BASE + ADC_SS_STEP * AdcChannelGroup.Sequencer + ADC_SSMUX)
-					|= (AdcChannelGroup.ArrayOfAdcChannels[i]<<(4*i));
-		Memory(AdcChannelGroup.AdcModule,ADC_SS_BASE + ADC_SS_STEP * AdcChannelGroup.Sequencer + ADC_SSCTL)
+		Memory(Adc_ConfigType->AdcModule, ADC_SS_BASE + ADC_SS_STEP * Adc_ConfigType->Sequencer + ADC_SSMUX)
+					|= (Adc_ConfigType->ArrayOfAdcChannels[i]<<(4*i));
+		Memory(Adc_ConfigType->AdcModule,ADC_SS_BASE + ADC_SS_STEP * Adc_ConfigType->Sequencer + ADC_SSCTL)
 					|= (0x04<<(4*i));
 	}	
-		Memory(AdcChannelGroup.AdcModule,ADC_SS_BASE + ADC_SS_STEP * AdcChannelGroup.Sequencer + ADC_SSCTL)
-					|= (0x06<<(4*(AdcChannelGroup.NbChannels-1)));
+		Memory(Adc_ConfigType->AdcModule,ADC_SS_BASE + ADC_SS_STEP * Adc_ConfigType->Sequencer + ADC_SSCTL)
+					|= (0x06<<(4*(Adc_ConfigType->NbChannels-1)));
 		
 	//Assign priority for each group (sequencer)
-	//Memory(AdcChannelGroup.AdcModule,ADC_SSPRI) |= (AdcChannelGroup.GroupPriority<<(AdcChannelGroup.Sequencer*4));
+	//Memory(Adc_ConfigType->AdcModule,ADC_SSPRI) |= (Adc_ConfigType->GroupPriority<<(Adc_ConfigType->Sequencer*4));
 	
 	//Enable sequencer
-	Memory(AdcChannelGroup.AdcModule,ADC_ACTSS) |= (1<<AdcChannelGroup.Sequencer);
+	Memory(Adc_ConfigType->AdcModule,ADC_ACTSS) |= (1<<Adc_ConfigType->Sequencer);
 	
 	//Deactivate all seguencers 
-	if(AdcChannelGroup.AdcModule==ADC0)
+	if(Adc_ConfigType->AdcModule==ADC0)
 		ADC0_PSSI_R = 0x00 ; 
 	else
 		ADC1_PSSI_R = 0x00 ;
 	
 	//[SWS_Adc_00221]
 	//Set the status of Adc Group to IDLE before start conversion
-	AdcChannelGroup.Adc_StatusType = ADC_IDLE;
+	Adc_ConfigType->Adc_StatusType = ADC_IDLE;
 }
 #if (ADC_DEINIT_API==STD_ON)		
 void Adc_DeInit (void)
 {
-	//Memory(AdcChannelGroup.AdcModule,ADC_SSPRI) |= (AdcChannelGroup.GroupPriority<<(AdcChannelGroup.Sequencer*4));	
+	//Memory(Adc_ConfigType.AdcModule,ADC_SSPRI) |= (Adc_ConfigType.GroupPriority<<(Adc_ConfigType.Sequencer*4));	
 	Memory(ADC0,ADC_EMUX) &= ~0xffffffff;
 	Memory(ADC1,ADC_EMUX) &= ~0xffffffff;
 	Memory(ADC0,ADC_SSCTL) &= ~0xffffffff;
@@ -247,7 +247,7 @@ void Adc_StartGroupConversion ( Adc_GroupType Adc_GroupType )
 	//To get the sequencer of the given group ID
 	Sequencer Current_Sequencer;
 	_Bool ValidGroup = 0;
-	AdcChannelGroup* ChannelGroup;
+	Adc_ConfigType* ChannelGroup;
 	Memory(ArrayOfAdcChannelGroups[Adc_GroupType].AdcModule,ADC_ACTSS) |= (1<<ArrayOfAdcChannelGroups[Adc_GroupType].Sequencer);
 	for( uint32_t i=0 ;i <= MAX_NB_GROUPS; i++)
 	{
@@ -316,22 +316,22 @@ Adc_StatusType Adc_GetGroupStatus ( Adc_GroupType Group )
 //To enable interrupts for a specific group
 void Adc_EnableGroupNotification(Adc_GroupType Adc_GroupType)
 {
-	AdcChannelGroup AdcChannelGroup = ArrayOfAdcChannelGroups[Adc_GroupType];
-	Memory(AdcChannelGroup.AdcModule,ADC_IM) |= (1<<AdcChannelGroup.Sequencer);
-	if(AdcChannelGroup.AdcModule==ADC0) 
-		NVIC_EN0_R |= (1<<(14+AdcChannelGroup.Sequencer));
-	else if(AdcChannelGroup.AdcModule==ADC1)	
-		NVIC_EN1_R |= (1<<(16+AdcChannelGroup.Sequencer));	
+	Adc_ConfigType Adc_ConfigType = ArrayOfAdcChannelGroups[Adc_GroupType];
+	Memory(Adc_ConfigType.AdcModule,ADC_IM) |= (1<<Adc_ConfigType.Sequencer);
+	if(Adc_ConfigType.AdcModule==ADC0) 
+		NVIC_EN0_R |= (1<<(14+Adc_ConfigType.Sequencer));
+	else if(Adc_ConfigType.AdcModule==ADC1)	
+		NVIC_EN1_R |= (1<<(16+Adc_ConfigType.Sequencer));	
 }
 //To disable interrupts for a specific group
 void Adc_DisableGroupNotification(Adc_GroupType Adc_GroupType)
 {
-	AdcChannelGroup AdcChannelGroup = ArrayOfAdcChannelGroups[Adc_GroupType];
-	Memory(AdcChannelGroup.AdcModule,ADC_IM) &= ~(1<<AdcChannelGroup.Sequencer);
-	if(AdcChannelGroup.AdcModule==ADC0) 
-		NVIC_EN0_R &= ~(1<<(14+AdcChannelGroup.Sequencer));
-	else if(AdcChannelGroup.AdcModule==ADC1)	
-		NVIC_EN1_R &= ~(1<<(16+AdcChannelGroup.Sequencer));	
+	Adc_ConfigType Adc_ConfigType = ArrayOfAdcChannelGroups[Adc_GroupType];
+	Memory(Adc_ConfigType.AdcModule,ADC_IM) &= ~(1<<Adc_ConfigType.Sequencer);
+	if(Adc_ConfigType.AdcModule==ADC0) 
+		NVIC_EN0_R &= ~(1<<(14+Adc_ConfigType.Sequencer));
+	else if(Adc_ConfigType.AdcModule==ADC1)	
+		NVIC_EN1_R &= ~(1<<(16+Adc_ConfigType.Sequencer));	
 }
 #endif
 #if (ADC_HW_TRIGGER_API == STD_ON)

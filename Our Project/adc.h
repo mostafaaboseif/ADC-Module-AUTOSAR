@@ -182,7 +182,7 @@ ADC_PRIORITY_HW_SW
 
 /* ---------------------------------- STRUCTS ---------------------------------- */
 
-typedef struct AdcChannelGroup{
+typedef struct Adc_ConfigType{
 Adc_GroupType Adc_GroupType;
 AdcModule AdcModule;
 Sequencer Sequencer;
@@ -197,7 +197,7 @@ Adc_StatusType Adc_StatusType;
 Adc_GroupPriorityType GroupPriority;
 Adc_ChannelType NbChannels;
 AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
-}AdcChannelGroup;
+}Adc_ConfigType;
 
 /*----------------------------------- FUNCTION-LIKE MACROS -----------------------------------*/
 
@@ -209,7 +209,7 @@ AdcChannel ArrayOfAdcChannels[MAX_NB_CHANNELS];
 
 /* ---------------------------------- FUNCTION DECLARATIONS ---------------------------------- */
 
-void Adc_init(AdcChannelGroup);
+void Adc_init(Adc_ConfigType*);
 
 #if (ADC_DEINIT_API==STD_ON)		
 void Adc_DeInit (void);
